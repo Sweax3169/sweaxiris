@@ -40,10 +40,11 @@ jobs:
           Copy-Item out/app/* pkg/SweaxIris -Recurse
           Copy-Item LICENSE pkg/SweaxIris/LICENSE.txt
           Copy-Item THIRD_PARTY_NOTICES.md pkg/SweaxIris/
+          Copy-Item src/SweaxIris/Assets/Fonts/IBMPlex-OFL.txt pkg/SweaxIris/
           Compress-Archive pkg/SweaxIris "dist/SweaxIris-$ver-win-x64.zip"
-          Get-ChildItem dist -File | Sort-Object Name | ForEach-Object { "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name } |
-            Out-File dist/SHA256SUMS.txt -Encoding ascii
-          (Get-Content dist/SHA256SUMS.txt -Raw).Replace("`r`n", "`n") | Set-Content dist/SHA256SUMS.txt -NoNewline -Encoding ascii
+          $sums = Get-ChildItem dist -File | Where-Object Name -ne 'SHA256SUMS.txt' | Sort-Object Name |
+            ForEach-Object { "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name }
+          [IO.File]::WriteAllText("$PWD/dist/SHA256SUMS.txt", ($sums -join "`n") + "`n")
           Get-ChildItem dist | Format-Table Name, Length
 
       - uses: actions/upload-artifact@v4
