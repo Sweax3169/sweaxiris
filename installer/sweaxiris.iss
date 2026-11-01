@@ -56,6 +56,7 @@ Source: "{#Src}\SweaxIris.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#Src}\ffmpeg\*"; DestDir: "{app}\ffmpeg"; Flags: ignoreversion
 Source: "..\LICENSE"; DestDir: "{app}"; DestName: "LICENSE.txt"; Flags: ignoreversion
 Source: "..\THIRD_PARTY_NOTICES.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\src\SweaxIris\Assets\Fonts\IBMPlex-OFL.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{userprograms}\SweaxIris"; Filename: "{app}\SweaxIris.exe"; Comment: "Screen recorder"
