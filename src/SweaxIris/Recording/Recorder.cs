@@ -366,7 +366,9 @@ public sealed unsafe class Recorder : IDisposable
                     else if (gap > 0) Interlocked.Add(ref _dropped, gap);
                     bool preview = Preview != null && ++sincePreview >= previewEvery;
                     if (preview) sincePreview = 0;
-                    Emit(idx, fresh: true, now, preview);
+                    // the frame shows the moment it stands for, not the moment we woke up
+                    long when = now - (act - idx * 10_000_000 / fps);
+                    Emit(idx, fresh: true, when, preview);
                     last = idx;
                 }
                 // wake exactly at the next frame's moment

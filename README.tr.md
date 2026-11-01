@@ -255,16 +255,17 @@ Ekran kartı RTX 4070 SUPER, işlemci Ryzen 5 7600 (AMF için içindeki AMD Rade
 
 | Kodlayıcı | Boyut · fps | Kaybolan kare | Ses ile görüntü farkı |
 |---|---|---|---|
-| NVENC H.264 | 1920×1080 · 60 | 0 | −0,4 ms |
-| NVENC H.264 | 2560×1440 · 144 | 0 | −2,3 ms |
-| NVENC HEVC | 3840×2160 · 60 | 0 | 0,0 ms |
-| NVENC AV1 | 2560×1440 · 120 | 0 | 0,0 ms |
-| AMF H.264 (işlemci içi grafik) | 1920×1080 · 60 | 0 | −0,1 ms |
-| AMF HEVC (işlemci içi grafik) | 2560×1440 · 60 | 0 | −2,6 ms |
-| x264 (işlemci) | 1920×1080 · 60 | 0 | 0,0 ms |
+| NVENC H.264 | 1920×1080 · 60 | 0 | −0,1 ms |
+| NVENC H.264 | 2560×1440 · 144 | 0 | −0,2 ms |
+| NVENC HEVC | 3840×2160 · 60 | 0 | −0,1 ms |
+| NVENC AV1 | 2560×1440 · 120 | 0 | −0,1 ms |
+| AMF H.264 (işlemci içi grafik) | 1920×1080 · 60 | 0 | −0,2 ms |
+| AMF HEVC (işlemci içi grafik) | 2560×1440 · 60 | 0 | −0,1 ms |
+| x264 (işlemci) | 1920×1080 · 60 | 0 | −0,1 ms |
 
-- **Duraklatma.** Flaş ve ton, her duraklatmadan önce ve sonra birbirinin bir kare yakınında kalır; MP4'te de
-  MKV'de de (sentetik test: ±1 ms).
+- **Her kare zamanında.** Her kare, zaman damgasının temsil ettiği anı gösterir (ölçülen sapma 1 ms'nin altında);
+  yukarıdaki koşuların hiçbirinde kare kaybolmadı ya da tekrarlanmadı.
+- **Duraklatma.** Flaş ve ton, her duraklatmadan önce ve sonra birbirinin bir kare yakınında kalır; MP4'te de MKV'de de.
 - **Saat kayması.** %0,08 hızlı ya da yavaş çalışan bir ses kartı nazikçe esnetilerek sistem saatine oturtulur;
   iki duraklatmalı 20 saniyelik testin sonunda bile hizalı.
 - **Gerçek yakalama.** SweaxIris'in kendi test penceresi Windows.Graphics.Capture ile, kendi sesi yalnız-uygulama

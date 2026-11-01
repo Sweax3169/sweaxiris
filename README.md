@@ -256,16 +256,17 @@ Graphics card RTX 4070 SUPER, processor Ryzen 5 7600 with its AMD Radeon graphic
 
 | Encoder | Size · fps | Frames lost | Sound vs picture |
 |---|---|---|---|
-| NVENC H.264 | 1920×1080 · 60 | 0 | −0.4 ms |
-| NVENC H.264 | 2560×1440 · 144 | 0 | −2.3 ms |
-| NVENC HEVC | 3840×2160 · 60 | 0 | 0.0 ms |
-| NVENC AV1 | 2560×1440 · 120 | 0 | 0.0 ms |
-| AMF H.264 (integrated graphics) | 1920×1080 · 60 | 0 | −0.1 ms |
-| AMF HEVC (integrated graphics) | 2560×1440 · 60 | 0 | −2.6 ms |
-| x264 (processor) | 1920×1080 · 60 | 0 | 0.0 ms |
+| NVENC H.264 | 1920×1080 · 60 | 0 | −0.1 ms |
+| NVENC H.264 | 2560×1440 · 144 | 0 | −0.2 ms |
+| NVENC HEVC | 3840×2160 · 60 | 0 | −0.1 ms |
+| NVENC AV1 | 2560×1440 · 120 | 0 | −0.1 ms |
+| AMF H.264 (integrated graphics) | 1920×1080 · 60 | 0 | −0.2 ms |
+| AMF HEVC (integrated graphics) | 2560×1440 · 60 | 0 | −0.1 ms |
+| x264 (processor) | 1920×1080 · 60 | 0 | −0.1 ms |
 
-- **Pauses.** Flash and tone stay within one frame of each other before and after each pause, in MP4 and MKV
-  (synthetic test: ±1 ms).
+- **Every frame on time.** Each frame shows the moment its timestamp stands for (measured: under 1 ms off) and none
+  is dropped or repeated in any of the runs above.
+- **Pauses.** Flash and tone stay within one frame of each other before and after each pause, in MP4 and MKV.
 - **Clock drift.** A sound card running 0.08 % fast or slow is stretched back onto the system clock; after 20 s
   with two pauses the drift test still lines up.
 - **Real capture.** Recording SweaxIris's own test window through Windows.Graphics.Capture, with its own sound
