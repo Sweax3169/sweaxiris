@@ -508,7 +508,7 @@ public partial class MainWindow : Window
     public void BuildTakes()
     {
         TakesRow.Children.Clear();
-        foreach (var t in _studio.Takes.Where(t => File.Exists(t.Path)).Take(24))
+        foreach (var t in _studio.Takes.Where(t => Studio.Demo || File.Exists(t.Path)).Take(24))
             TakesRow.Children.Add(TakeCard(t));
         TakesEmpty.Visibility = TakesRow.Children.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         TakesCount.Text = TakesRow.Children.Count > 0 ? TakesRow.Children.Count.ToString() : "";

@@ -314,8 +314,8 @@ pictures).
 
 Prefer no installer? The zip next to it runs from any folder. `SHA256SUMS.txt` lists the checksums of both.
 
-**Needs** Windows 10 2004 or newer (Windows 11 for capture without the yellow border and above 60 fps), a
-DirectX 11 graphics card. Hardware encoders need a recent driver.
+**Needs** Windows 10 2004 or newer and a DirectX 11 graphics card. Windows 11 removes the yellow capture border;
+Windows 11 24H2 or newer is needed to capture faster than 60 fps. Hardware encoders need a recent driver.
 
 Windows SmartScreen may warn the first time because the program is not code-signed: **More info → Run anyway**.
 

@@ -313,8 +313,8 @@ yaylar), `Dev/` (öz-test, görseller).
 
 Kurulum istemiyor musun? Yanındaki zip her klasörden çalışır. `SHA256SUMS.txt` ikisinin de özetini listeler.
 
-**Gerekenler:** Windows 10 2004 ya da sonrası (sarı çerçevesiz ve 60 fps üstü yakalama için Windows 11), DirectX 11
-ekran kartı. Donanım kodlayıcılar güncel sürücü ister.
+**Gerekenler:** Windows 10 2004 ya da sonrası ve DirectX 11 ekran kartı. Windows 11 sarı yakalama çerçevesini kaldırır;
+60 fps üstü yakalama için Windows 11 24H2 ya da sonrası gerekir. Donanım kodlayıcılar güncel sürücü ister.
 
 Program kod imzalı olmadığı için Windows SmartScreen ilk seferde uyarabilir: **Ek bilgi → Yine de çalıştır**.
 

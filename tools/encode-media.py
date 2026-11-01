@@ -23,7 +23,7 @@ def main(src, dst):
         pattern = os.path.join(d, "%05d.png")
         mp4 = os.path.join(dst, film + ".mp4")
         gif = os.path.join(dst, film + ".gif")
-        run(["-framerate", "30", "-i", pattern, "-vf", "scale='min(1600,iw)':-2:flags=lanczos,format=yuv420p",
+        run(["-framerate", "30", "-i", pattern, "-vf", "scale='trunc(min(1600,iw)/2)*2':-2:flags=lanczos,format=yuv420p",
              "-c:v", "libx264", "-preset", "slow", "-crf", "21", "-movflags", "+faststart", mp4])
         run(["-framerate", "30", "-i", pattern, "-vf",
              "fps=15,scale=880:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160:stats_mode=diff[p];[b][p]paletteuse=dither=sierra2_4a:diff_mode=rectangle",
