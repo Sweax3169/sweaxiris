@@ -42,7 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\vendor\ffmpeg\*.dll" Link="ffmpeg\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Condition="Exists('..\..\vendor\ffmpeg')" />
+    <None Include="..\..\vendor\ffmpeg\*.dll;..\..\vendor\ffmpeg\*.txt" Link="ffmpeg\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" ExcludeFromSingleFile="true" Condition="Exists('..\..\vendor\ffmpeg')" />
   </ItemGroup>
 
 </Project>

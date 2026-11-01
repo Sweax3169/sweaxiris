@@ -101,6 +101,8 @@ public sealed unsafe class Recorder : IDisposable
     long _endActive = -1;
     Exception? _failure;
 
+    ProcessPriorityClass? _priority;
+
     public RecorderState State { get; private set; } = RecorderState.Ready;
     public RecordingOptions Options => _o;
     public TimeSpan Elapsed => TimeSpan.FromTicks(_timeline.Elapsed);
@@ -285,6 +287,8 @@ public sealed unsafe class Recorder : IDisposable
     public void Begin()
     {
         if (State != RecorderState.Ready) return;
+        // stay ahead of busy apps (a render, a compile) while recording; back to normal on stop
+        try { _priority = Process.GetCurrentProcess().PriorityClass; Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal; } catch { }
         _timeline.Begin(Clock.Now);
         State = RecorderState.Recording;
         _mixer?.Start();
@@ -528,6 +532,7 @@ public sealed unsafe class Recorder : IDisposable
         catch (Exception ex) { error ??= ex.Message; }
         foreach (var s in _streams) s.Dispose();
         _streams.Clear();
+        try { if (_priority is { } p) Process.GetCurrentProcess().PriorityClass = p; } catch { }
         long bytes = File.Exists(_o.OutputPath) ? new FileInfo(_o.OutputPath).Length : 0;
         State = error == null ? RecorderState.Done : RecorderState.Failed;
         var result = new RecordingResult(_o.OutputPath, TimeSpan.FromTicks(Math.Max(0, _endActive)), bytes, Frames, Dropped, Late,

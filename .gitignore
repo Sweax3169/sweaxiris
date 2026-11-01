@@ -3,3 +3,6 @@ obj/
 *.user
 .vs/
 vendor/ffmpeg/*.dll
+out/
+dist/
+docs/shots/

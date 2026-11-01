@@ -1,0 +1,60 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: FFmpeg libraries (gyan.dev 7.1.1, pinned)
+        shell: pwsh
+        run: ./tools/fetch-ffmpeg.ps1
+
+      - name: Publish (self-contained single file + ffmpeg folder)
+        run: >
+          dotnet publish src/SweaxIris -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o out/app
+
+      - name: Installer and portable zip
+        shell: pwsh
+        run: |
+          $ver = if ($env:GITHUB_REF -like 'refs/tags/v*') { $env:GITHUB_REF_NAME.TrimStart('v') } else { '0.0.0-dev' }
+          New-Item -ItemType Directory dist -Force | Out-Null
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress; $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe" }
+          & $iscc /Q "/DAppVer=$ver" "/DSrc=$PWD\out\app" "/O$PWD\dist" installer\sweaxiris.iss
+          New-Item -ItemType Directory pkg/SweaxIris -Force | Out-Null
+          Copy-Item out/app/* pkg/SweaxIris -Recurse
+          Copy-Item LICENSE pkg/SweaxIris/LICENSE.txt
+          Copy-Item THIRD_PARTY_NOTICES.md pkg/SweaxIris/
+          Compress-Archive pkg/SweaxIris "dist/SweaxIris-$ver-win-x64.zip"
+          Get-ChildItem dist -File | Sort-Object Name | ForEach-Object { "{0}  {1}" -f (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(), $_.Name } |
+            Out-File dist/SHA256SUMS.txt -Encoding ascii
+          (Get-Content dist/SHA256SUMS.txt -Raw).Replace("`r`n", "`n") | Set-Content dist/SHA256SUMS.txt -NoNewline -Encoding ascii
+          Get-ChildItem dist | Format-Table Name, Length
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: SweaxIris-${{ github.sha }}
+          path: dist/*
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          name: SweaxIris ${{ github.ref_name }}
+          body_path: docs/release-notes/${{ github.ref_name }}.md
+          files: dist/*
