@@ -223,7 +223,7 @@
                         </StackPanel>
                     </Button>
                 </Grid>
-                <Grid Height="112" Margin="0,8,0,0">
+                <Grid Height="124" Margin="0,8,0,0">
                     <ScrollViewer x:Name="TakesScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                         <StackPanel x:Name="TakesRow" Orientation="Horizontal"/>
                     </ScrollViewer>
