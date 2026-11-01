@@ -199,7 +199,14 @@ public sealed unsafe class VideoEncoder : IDisposable
             ffmpeg.av_opt_set_int(b->priv_data, "matrix_coefficients", 1, 0);
             ffmpeg.av_opt_set_int(b->priv_data, "video_full_range_flag", 0, 0);
         }
-        FF.Check(ffmpeg.av_bsf_init(b), name);
+        int r = ffmpeg.av_bsf_init(b);
+        if (r < 0)
+        {
+            // some drivers hand out headers the filter cannot parse; then the stream keeps its own tags
+            Paths.Log($"{name}: {FF.Error(r)}, colour tags left as the encoder wrote them");
+            ffmpeg.av_bsf_free(&b);
+            return;
+        }
         _bsf = b;
     }
 

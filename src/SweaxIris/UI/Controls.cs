@@ -151,7 +151,7 @@ public sealed class Segments : Border
             var text = new TextBlock
             {
                 Text = label, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center,
-                FontSize = 12.5, FontFamily = (FontFamily)FindResource("PlexMedium"), Margin = new Thickness(8, 6, 8, 6), TextTrimming = TextTrimming.CharacterEllipsis,
+                FontSize = 12.5, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium, Margin = new Thickness(8, 6, 8, 6), TextTrimming = TextTrimming.CharacterEllipsis,
             };
             var hit = new Border { Background = Brushes.Transparent, Child = text, Cursor = Cursors.Hand };
             var v = value;
@@ -292,7 +292,7 @@ public static class KeyCaps
             cap.SetResourceReference(Border.BackgroundProperty, "Raised");
             cap.SetResourceReference(Border.BorderBrushProperty, "LineStrong");
             ((TextBlock)cap.Child).SetResourceReference(TextBlock.ForegroundProperty, "Text");
-            ((TextBlock)cap.Child).SetResourceReference(TextBlock.FontFamilyProperty, "PlexMedium");
+            ((TextBlock)cap.Child).SetResourceReference(TextBlock.FontFamilyProperty, "Plex"); ((TextBlock)cap.Child).FontWeight = FontWeights.Medium;
             row.Children.Add(cap);
         }
         return row;

@@ -165,7 +165,7 @@ public partial class MainWindow : Window
             {
                 Width = Math.Max(10, m.Bounds.Width * s - 4), Height = Math.Max(10, m.Bounds.Height * s - 4), CornerRadius = new CornerRadius(5),
                 BorderThickness = new Thickness(on ? 2 : 1), Cursor = Cursors.Hand,
-                Child = new TextBlock { Text = m.Number.ToString(), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("PlexSemi"), FontSize = 13 },
+                Child = new TextBlock { Text = m.Number.ToString(), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.SemiBold, FontSize = 13 },
                 ToolTip = $"{m.Name} · {m.Bounds.Width} × {m.Bounds.Height}{(m.Hz > 0 ? $" · {Math.Round(m.Hz)} Hz" : "")}",
             };
             b.SetResourceReference(Border.BackgroundProperty, on ? "AccentSoft" : "Raised");
@@ -543,7 +543,7 @@ public partial class MainWindow : Window
             catch { }
         }
         var badge = new Border { CornerRadius = new CornerRadius(5), Background = new SolidColorBrush(Color.FromArgb(0xB0, 8, 10, 13)), Padding = new Thickness(6, 2, 6, 2), Margin = new Thickness(6), HorizontalAlignment = HorizontalAlignment.Right, VerticalAlignment = VerticalAlignment.Bottom,
-            Child = new TextBlock { Text = Format.Duration(t.Seconds), Foreground = Brushes.White, FontSize = 11, FontFamily = (FontFamily)FindResource("PlexMedium") } };
+            Child = new TextBlock { Text = Format.Duration(t.Seconds), Foreground = Brushes.White, FontSize = 11, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium } };
         inner.Children.Add(badge);
         var play = new Border { Background = new SolidColorBrush(Color.FromArgb(0x70, 0, 0, 0)), Opacity = 0, Child = new Ico { Data = (Geometry)FindResource("IcoPlay"), FillShape = true, Width = 26, Height = 26, Foreground = Brushes.White } };
         inner.Children.Add(play);
@@ -551,7 +551,7 @@ public partial class MainWindow : Window
         card.Children.Add(frame);
         var text = new StackPanel { Margin = new Thickness(2, 6, 2, 0) };
         Grid.SetRow(text, 1);
-        text.Children.Add(new TextBlock { Text = Format.When(t.When), FontSize = 12, FontFamily = (FontFamily)FindResource("PlexMedium"), TextTrimming = TextTrimming.CharacterEllipsis });
+        text.Children.Add(new TextBlock { Text = Format.When(t.When), FontSize = 12, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium, TextTrimming = TextTrimming.CharacterEllipsis });
         var sub = new TextBlock { Text = $"{Format.Size(t.Bytes)} · {t.Width}×{t.Height} · {t.Fps} fps", FontSize = 11, TextTrimming = TextTrimming.CharacterEllipsis };
         sub.SetResourceReference(TextBlock.ForegroundProperty, "TextFaint");
         text.Children.Add(sub);

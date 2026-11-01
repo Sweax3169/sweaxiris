@@ -298,7 +298,7 @@ public sealed class SettingsView : Grid
         var qualityRow = Row(Loc.T("set.rate"), Loc.T("set.quality.d"), Seg(new[] { (0.30, Loc.T("q.small")), (0.55, Loc.T("q.balanced")), (0.72, Loc.T("q.high")), (0.92, Loc.T("q.max")) },
             new[] { 0.30, 0.55, 0.72, 0.92 }.OrderBy(x => Math.Abs(x - S.Quality)).First(), v => S.Quality = v), 340);
         var bitrate = new Slider { Minimum = 2, Maximum = 150, Value = S.BitrateKbps / 1000.0, Width = 220, IsSnapToTickEnabled = true, TickFrequency = 1 };
-        var bitrateText = new TextBlock { Text = $"{S.BitrateKbps / 1000} Mbps", Width = 70, TextAlignment = TextAlignment.Right, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("PlexMedium") };
+        var bitrateText = new TextBlock { Text = $"{S.BitrateKbps / 1000} Mbps", Width = 70, TextAlignment = TextAlignment.Right, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium };
         bitrate.ValueChanged += (_, e) => { S.BitrateKbps = (int)e.NewValue * 1000; bitrateText.Text = $"{(int)e.NewValue} Mbps"; };
         bitrate.LostMouseCapture += (_, _) => S.Save();
         var bp = new StackPanel { Orientation = Orientation.Horizontal };
@@ -340,7 +340,7 @@ public sealed class SettingsView : Grid
     FrameworkElement Offset(int value, Action<int> set)
     {
         var s = new Slider { Minimum = -500, Maximum = 500, Value = value, Width = 200, IsSnapToTickEnabled = true, TickFrequency = 10 };
-        var t = new TextBlock { Text = $"{value:+0;−0;0} ms", Width = 70, TextAlignment = TextAlignment.Right, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("PlexMedium") };
+        var t = new TextBlock { Text = $"{value:+0;−0;0} ms", Width = 70, TextAlignment = TextAlignment.Right, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium };
         s.ValueChanged += (_, e) => { set((int)e.NewValue); t.Text = $"{(int)e.NewValue:+0;−0;0} ms"; };
         s.LostMouseCapture += (_, _) => S.Save();
         s.MouseDoubleClick += (_, _) => s.Value = 0;

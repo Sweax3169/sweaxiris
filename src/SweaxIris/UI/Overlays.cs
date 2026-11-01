@@ -70,7 +70,7 @@ public sealed class CountdownWindow : FloatWindow
     public CountdownWindow(Win32.RECT area) : base(clickThrough: true)
     {
         _area = area;
-        _num.FontFamily = (FontFamily)FindResource("PlexSemi");
+        _num.FontFamily = (FontFamily)FindResource("Plex"); _num.FontWeight = FontWeights.SemiBold;
         _num.Effect = new System.Windows.Media.Effects.DropShadowEffect { BlurRadius = 10, ShadowDepth = 0, Opacity = 0.7 };
         _iris.Core = (Color)FindResource("TallyColor");
         var g = new Grid { Width = 200, Height = 200 };
@@ -178,7 +178,7 @@ public sealed class ControllerWindow : FloatWindow
     public ControllerWindow(Studio studio)
     {
         _studio = studio;
-        _time.FontFamily = (FontFamily)FindResource("PlexMedium");
+        _time.FontFamily = (FontFamily)FindResource("Plex"); _time.FontWeight = FontWeights.Medium;
         _time.SetResourceReference(TextBlock.ForegroundProperty, "Text");
         _state.SetResourceReference(TextBlock.ForegroundProperty, "TextDim");
         _tally.Core = (Color)FindResource("TallyColor");
@@ -334,7 +334,7 @@ public sealed class ToastWindow : FloatWindow
         row.Children.Add(thumb);
         var text = new StackPanel { VerticalAlignment = VerticalAlignment.Center };
         Grid.SetColumn(text, 1);
-        var title = new TextBlock { FontFamily = (FontFamily)FindResource("PlexSemi"), FontSize = 13.5, TextTrimming = TextTrimming.CharacterEllipsis };
+        var title = new TextBlock { FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.SemiBold, FontSize = 13.5, TextTrimming = TextTrimming.CharacterEllipsis };
         title.SetResourceReference(TextBlock.ForegroundProperty, error ? "Tally" : "Text");
         title.Text = error ? Loc.T("err.title") : $"{Loc.T("toast.saved")} · {Format.Duration(take.Seconds)} · {Format.Size(take.Bytes)}";
         var sub = new TextBlock { FontSize = 12, TextTrimming = TextTrimming.CharacterEllipsis, TextWrapping = error ? TextWrapping.Wrap : TextWrapping.NoWrap, MaxHeight = 48 };

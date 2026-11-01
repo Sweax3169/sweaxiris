@@ -399,7 +399,7 @@ public sealed class RegionSelector
                 }
                 else dc.DrawRectangle(veil, null, full);
 
-                var face = new Typeface((FontFamily)FindResource("PlexMedium"), FontStyles.Normal, FontWeights.Normal, FontStretches.Normal);
+                var face = new Typeface((FontFamily)FindResource("Plex"), FontStyles.Normal, FontWeights.Medium, FontStretches.Normal);
                 double dpi = VisualTreeHelper.GetDpi(this).PixelsPerDip;
 
                 void Label(string text, Point at, bool above)

@@ -23,14 +23,14 @@
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
                 <ui:Iris x:Name="Logo" Width="24" Height="24" ShowScale="False" Aperture="0.42"/>
-                <TextBlock Text="SweaxIris" FontFamily="{StaticResource PlexSemi}" FontSize="15" Margin="10,0,0,1" VerticalAlignment="Center"/>
+                <TextBlock Text="SweaxIris" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="15" Margin="10,0,0,1" VerticalAlignment="Center"/>
                 <TextBlock x:Name="Tagline" Style="{StaticResource Faint}" FontSize="12.5" Margin="10,1,0,0" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Border x:Name="RecChip" CornerRadius="7" Background="{DynamicResource TallySoft}" Padding="10,4" VerticalAlignment="Center" Margin="0,0,10,0" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="RecDot" Width="8" Height="8" Fill="{DynamicResource Tally}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="RecChipText" Margin="7,0,0,0" FontFamily="{StaticResource PlexMedium}" FontSize="12.5" Foreground="{DynamicResource Text}"/>
+                        <TextBlock x:Name="RecChipText" Margin="7,0,0,0" FontFamily="{StaticResource Plex}" FontWeight="Medium" FontSize="12.5" Foreground="{DynamicResource Text}"/>
                     </StackPanel>
                 </Border>
                 <Button x:Name="SettingsButton" Style="{StaticResource IconBtn}" WindowChrome.IsHitTestVisibleInChrome="True" Margin="0,0,6,0" ToolTip="{core:L settings}">
@@ -66,12 +66,12 @@
                         <!-- viewfinder marks -->
                         <Path x:Name="Brackets" Stroke="#BFFFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" IsHitTestVisible="False"/>
                         <Border VerticalAlignment="Top" HorizontalAlignment="Left" Margin="14" CornerRadius="6" Background="#99090B0E" Padding="9,4">
-                            <TextBlock x:Name="SourceChip" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource PlexMedium}"/>
+                            <TextBlock x:Name="SourceChip" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource Plex}" FontWeight="Medium"/>
                         </Border>
                         <Border x:Name="FinderRec" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="14" CornerRadius="6" Background="#99090B0E" Padding="9,4" Visibility="Collapsed">
                             <StackPanel Orientation="Horizontal">
                                 <Ellipse x:Name="FinderDot" Width="8" Height="8" Fill="{DynamicResource Tally}" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="FinderRecText" Margin="7,0,0,0" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource PlexMedium}"/>
+                                <TextBlock x:Name="FinderRecText" Margin="7,0,0,0" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource Plex}" FontWeight="Medium"/>
                             </StackPanel>
                         </Border>
                     </Grid>
@@ -85,7 +85,7 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel VerticalAlignment="Center">
-                        <TextBlock x:Name="OutSize" FontFamily="{StaticResource PlexSemi}" FontSize="16"/>
+                        <TextBlock x:Name="OutSize" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="16"/>
                         <TextBlock x:Name="OutLine" Style="{StaticResource Dim}" Margin="0,3,0,0"/>
                         <TextBlock x:Name="OutLine2" Style="{StaticResource Faint}" Margin="0,2,0,0"/>
                     </StackPanel>
@@ -100,14 +100,14 @@
                         </Button>
                         <Grid x:Name="RecordHost" Grid.Column="1" Width="120" Height="120" Cursor="Hand" Background="Transparent">
                             <ui:Iris x:Name="RecordIris" Aperture="0.18"/>
-                            <TextBlock x:Name="CountText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource PlexSemi}" FontSize="34" Foreground="White" Opacity="0" IsHitTestVisible="False"/>
+                            <TextBlock x:Name="CountText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="34" Foreground="White" Opacity="0" IsHitTestVisible="False"/>
                         </Grid>
                         <Button x:Name="MicButton" Grid.Column="2" Style="{StaticResource Btn}" Width="46" Height="46" Padding="0" HorizontalAlignment="Right" Opacity="0" IsHitTestVisible="False">
                             <ui:Ico x:Name="MicIco" Data="{StaticResource IcoMic}" Width="20" Height="20"/>
                         </Button>
                     </Grid>
                     <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <TextBlock x:Name="Timecode" Text="00:00:00" FontFamily="{StaticResource PlexLight}" FontSize="34" HorizontalAlignment="Right"/>
+                        <TextBlock x:Name="Timecode" Text="00:00:00" FontFamily="{StaticResource Plex}" FontWeight="Light" FontSize="34" HorizontalAlignment="Right"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,2,0,0">
                             <TextBlock x:Name="StatusText" Style="{StaticResource Dim}" VerticalAlignment="Center"/>
                             <ContentControl x:Name="RecordKeys" Margin="8,0,0,0" VerticalAlignment="Center"/>
@@ -138,7 +138,7 @@
                                 </Grid>
                                 <!-- region -->
                                 <StackPanel x:Name="RegionPane" Visibility="Collapsed">
-                                    <TextBlock x:Name="RegionSize" FontFamily="{StaticResource PlexSemi}" FontSize="22"/>
+                                    <TextBlock x:Name="RegionSize" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="22"/>
                                     <TextBlock x:Name="RegionWhere" Style="{StaticResource Dim}" Margin="0,2,0,10"/>
                                     <StackPanel Orientation="Horizontal">
                                         <Button x:Name="DrawRegion" Style="{StaticResource BtnAccent}">
@@ -213,7 +213,7 @@
                 <Grid>
                     <StackPanel Orientation="Horizontal">
                         <ui:Ico Data="{StaticResource IcoFilm}" Width="16" Height="16" Foreground="{DynamicResource TextDim}"/>
-                        <TextBlock Text="{core:L takes}" FontFamily="{StaticResource PlexSemi}" FontSize="13" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="{core:L takes}" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="13" Margin="8,0,0,0" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TakesCount" Style="{StaticResource Faint}" Margin="8,0,0,0" VerticalAlignment="Center"/>
                     </StackPanel>
                     <Button x:Name="OpenFolder" Style="{StaticResource BtnGhost}" HorizontalAlignment="Right" Padding="10,4">

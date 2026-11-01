@@ -44,6 +44,16 @@ public partial class App : Application
         if (Has("--fonts")) { Paths.Init(); Dev.Snap.Fonts(Arg("--fonts")!); Shutdown(); return; }
         if (Has("--icon")) { Paths.Init(); Dev.Snap.Icon(Arg("--icon")!); Shutdown(); return; }
         if (Has("--selftest")) { Paths.Init(); Dev.SelfTest.Run(this, args); return; }
+        if (Has("--testcard"))
+        {
+            // a test pattern window of our own at x y w h for n seconds (end-to-end tests record it)
+            var v = Array.ConvertAll(args.SkipWhile(a => a != "--testcard").Skip(1).Take(5).ToArray(), int.Parse);
+            var card = new Dev.TestCardWindow(Clock.Now, v[0], v[1], v[2], v[3], topmost: true);
+            var t = new DispatcherTimer { Interval = TimeSpan.FromSeconds(v[4]) };
+            t.Tick += (_, _) => { t.Stop(); card.Dispose(); Shutdown(); };
+            t.Start();
+            return;
+        }
         if (Has("--shots")) { Dev.Shots.Run(this, args); return; }
 
         _instance = new Mutex(true, InstanceName, out bool first);
@@ -57,7 +67,7 @@ public partial class App : Application
         }
         if (Has("--quit")) { Shutdown(); return; }
 
-        Paths.Init();
+        Paths.Init(Arg("--data"));
         DispatcherUnhandledException += (_, ex) => { Paths.Log("ui: " + ex.Exception); ex.Handled = true; };
         AppDomain.CurrentDomain.UnhandledException += (_, ex) => Paths.Log("fatal: " + ex.ExceptionObject);
         TaskScheduler.UnobservedTaskException += (_, ex) => { Paths.Log("task: " + ex.Exception); ex.SetObserved(); };

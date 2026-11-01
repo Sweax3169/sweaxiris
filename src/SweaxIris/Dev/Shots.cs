@@ -329,7 +329,7 @@ public static class Shots
             var g = new Grid { Width = 180, Height = 180 };
             g.Children.Add(new Border { CornerRadius = new CornerRadius(90), Background = new SolidColorBrush(Color.FromArgb(0x66, 0, 0, 0)) });
             g.Children.Add(new Image { Source = Snap.Render(_countIris, 150, 150, 1), Width = 150, Height = 150 });
-            g.Children.Add(new TextBlock { Text = n.ToString(), FontSize = 50, Foreground = Brushes.White, FontFamily = (FontFamily)Application.Current.FindResource("PlexSemi"), HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
+            g.Children.Add(new TextBlock { Text = n.ToString(), FontSize = 50, Foreground = Brushes.White, FontFamily = (FontFamily)Application.Current.FindResource("Plex"), FontWeight = FontWeights.SemiBold, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center });
             Canvas.SetLeft(g, sel.Left + sel.Width / 2 - 90);
             Canvas.SetTop(g, sel.Top + sel.Height / 2 - 90);
             c.Children.Add(g);

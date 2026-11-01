@@ -58,6 +58,8 @@ public sealed class WgcSource : IVideoSource
     long _frames;
     bool _disposed;
     double _latency = 50_000;
+    readonly int[] _ages = new int[12];
+    long _lastPicked, _samePicks, _noneOlder, _gapMax, _lastArrival;
 
     public ID3D11Texture2D? Latest => _latest;
     /// <summary>How long frames take to reach us after Windows composed them (100 ns, a high percentile).</summary>
@@ -143,6 +145,8 @@ public sealed class WgcSource : IVideoSource
                 box = new Box(0, 0, 0, w, h, 1);
             }
             long composed = frame.SystemRelativeTime.Ticks;
+            if (_lastArrival != 0) _gapMax = Math.Max(_gapMax, composed - _lastArrival);
+            _lastArrival = composed;
             long lat = Clock.Now - composed;
             // a slowly falling peak follower: the recorder looks this far into the past
             if (lat is > 0 and < 2_000_000) _latency = lat > _latency ? lat : _latency * 0.995 + lat * 0.005;
@@ -197,6 +201,11 @@ public sealed class WgcSource : IVideoSource
         }
         int pick = best >= 0 ? best : oldest;
         if (pick < 0) return;
+        long age = when - _times[pick];
+        _ages[Math.Clamp((int)(age / 20_000), 0, _ages.Length - 1)]++;
+        if (_times[pick] == _lastPicked) _samePicks++;
+        _lastPicked = _times[pick];
+        if (best < 0) _noneOlder++;
         var tex = _ring[pick]!;
         if (!ReferenceEquals(tex, _latest))
         {
@@ -212,7 +221,7 @@ public sealed class WgcSource : IVideoSource
     {
         if (_disposed) return;
         _disposed = true;
-        if (Frames > 0) Paths.Log($"capture: {Frames} frames, delivery latency ~{_latency / 10_000:0.0} ms");
+        if (Frames > 0) Paths.Log($"capture: {Frames} frames, delivery latency ~{_latency / 10_000:0.0} ms, picked-age hist(2ms) [{string.Join(",", _ages)}], same {_samePicks}, none-older {_noneOlder}, longest gap between frames {_gapMax / 10_000.0:0.0} ms");
         try { _pool.FrameArrived -= OnFrame; } catch { }
         try { _session.Dispose(); } catch { }
         try { _pool.Dispose(); } catch { }

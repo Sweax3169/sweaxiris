@@ -11,18 +11,21 @@
 
     <!-- text -->
     <Style x:Key="H1" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource PlexSemi}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="Foreground" Value="{DynamicResource Text}"/>
     </Style>
     <Style x:Key="Label" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource PlexMedium}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Foreground" Value="{DynamicResource Text}"/>
         <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
     </Style>
     <Style x:Key="Section" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="{StaticResource PlexSemi}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="{DynamicResource TextDim}"/>
         <Setter Property="Margin" Value="0,0,0,8"/>
@@ -39,7 +42,8 @@
 
     <!-- buttons: a soft square with a press that springs -->
     <Style x:Key="Btn" TargetType="Button">
-        <Setter Property="FontFamily" Value="{StaticResource PlexMedium}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Foreground" Value="{DynamicResource Text}"/>
         <Setter Property="Background" Value="{DynamicResource Raised}"/>
@@ -71,7 +75,8 @@
         <Setter Property="Background" Value="{DynamicResource Accent}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource Accent}"/>
         <Setter Property="Foreground" Value="{DynamicResource AccentText}"/>
-        <Setter Property="FontFamily" Value="{StaticResource PlexSemi}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
     <Style x:Key="BtnGhost" TargetType="Button" BasedOn="{StaticResource Btn}">
         <Setter Property="Background" Value="Transparent"/>
@@ -120,7 +125,8 @@
     <!-- a list row that can be picked (windows, monitors, settings pages) -->
     <Style x:Key="Row" TargetType="RadioButton">
         <Setter Property="Foreground" Value="{DynamicResource Text}"/>
-        <Setter Property="FontFamily" Value="{StaticResource PlexMedium}"/>
+        <Setter Property="FontFamily" Value="{StaticResource Plex}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="FontSize" Value="13"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>

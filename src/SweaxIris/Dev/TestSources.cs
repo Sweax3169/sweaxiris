@@ -248,8 +248,11 @@ public sealed class TestCardWindow : IDisposable
     public IntPtr Handle { get; private set; }
     public long Presents { get; private set; }
 
-    public TestCardWindow(long epoch, int x, int y, int width, int height)
+    readonly bool _topmost;
+
+    public TestCardWindow(long epoch, int x, int y, int width, int height, bool topmost = false)
     {
+        _topmost = topmost;
         _thread = new Thread(() => Run(epoch, x, y, width, height)) { IsBackground = true, Name = "SweaxIris.TestCard" };
         _thread.Start();
         _ready.Wait(5000);
@@ -264,7 +267,7 @@ public sealed class TestCardWindow : IDisposable
         };
         RegisterClassExW(ref wc);
         const uint WS_POPUP = 0x80000000, WS_VISIBLE = 0x10000000, WS_EX_NOACTIVATE = 0x08000000, WS_EX_TOOLWINDOW = 0x80;
-        Handle = CreateWindowExW(WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW, "SweaxIrisTestCard", "SweaxIris test card", WS_POPUP | WS_VISIBLE, x, y, width, height, IntPtr.Zero, IntPtr.Zero, wc.hInstance, IntPtr.Zero);
+        Handle = CreateWindowExW(WS_EX_NOACTIVATE | WS_EX_TOOLWINDOW | (_topmost ? 0x8u : 0), "SweaxIrisTestCard", "SweaxIris test card", WS_POPUP | WS_VISIBLE, x, y, width, height, IntPtr.Zero, IntPtr.Zero, wc.hInstance, IntPtr.Zero);
         using var gpu = Gpu.Create();
         using var factory = gpu.Device.QueryInterface<IDXGIDevice>().GetParent<IDXGIAdapter>().GetParent<IDXGIFactory2>();
         using var swap = factory.CreateSwapChainForHwnd(gpu.Device, Handle, new SwapChainDescription1
