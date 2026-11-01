@@ -36,9 +36,9 @@ public sealed class SettingsView : Grid
         _main = main;
         ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(216) });
         ColumnDefinitions.Add(new ColumnDefinition());
-        var left = new Border { BorderThickness = new Thickness(0, 0, 1, 0), Child = _nav };
+        // the page list sits on the window itself; a hairline separates it from the page
+        var left = new Border { BorderThickness = new Thickness(0, 0, 1, 0), Child = _nav, Margin = new Thickness(0, 14, 0, 18) };
         left.SetResourceReference(Border.BorderBrushProperty, "Line");
-        left.SetResourceReference(Border.BackgroundProperty, "Surface");
         Children.Add(left);
         _scroll.Content = _page;
         SetColumn(_scroll, 1);
@@ -49,15 +49,6 @@ public sealed class SettingsView : Grid
     public void Reload()
     {
         _nav.Children.Clear();
-        var back = new Button { Style = (Style)FindResource("BtnGhost"), HorizontalAlignment = HorizontalAlignment.Left, Padding = new Thickness(8, 6, 12, 6), Margin = new Thickness(0, 0, 0, 14) };
-        var bp = new StackPanel { Orientation = Orientation.Horizontal };
-        bp.Children.Add(new Ico { Data = (Geometry)FindResource("IcoBack"), Width = 16, Height = 16, Margin = new Thickness(0, 0, 6, 0) });
-        bp.Children.Add(new TextBlock { Text = Loc.T("settings.back") });
-        back.Content = bp;
-        back.Click += (_, _) => _main.ShowSettings(false);
-        _nav.Children.Add(back);
-        var title = new TextBlock { Text = Loc.T("settings"), Style = (Style)FindResource("H1"), Margin = new Thickness(8, 0, 0, 14) };
-        _nav.Children.Add(title);
         foreach (var p in Pages)
         {
             var rb = new RadioButton { Style = (Style)FindResource("Row"), GroupName = "page", IsChecked = p == _current, Margin = new Thickness(0, 0, 0, 2) };
@@ -296,7 +287,7 @@ public sealed class SettingsView : Grid
             Row(Loc.T("set.container"), Loc.T("set.container.d"), Seg(new[] { ("mp4", "MP4"), ("mkv", "MKV") }, S.Container, v => S.Container = v), 160));
 
         var qualityRow = Row(Loc.T("set.rate"), Loc.T("set.quality.d"), Seg(new[] { (0.30, Loc.T("q.small")), (0.55, Loc.T("q.balanced")), (0.72, Loc.T("q.high")), (0.92, Loc.T("q.max")) },
-            new[] { 0.30, 0.55, 0.72, 0.92 }.OrderBy(x => Math.Abs(x - S.Quality)).First(), v => S.Quality = v), 340);
+            new[] { 0.30, 0.55, 0.72, 0.92 }.OrderBy(x => Math.Abs(x - S.Quality)).First(), v => S.Quality = v), 420);
         var bitrate = new Slider { Minimum = 2, Maximum = 150, Value = S.BitrateKbps / 1000.0, Width = 220, IsSnapToTickEnabled = true, TickFrequency = 1 };
         var bitrateText = new TextBlock { Text = $"{S.BitrateKbps / 1000} Mbps", Width = 70, TextAlignment = TextAlignment.Right, VerticalAlignment = VerticalAlignment.Center, FontFamily = (FontFamily)FindResource("Plex"), FontWeight = FontWeights.Medium };
         bitrate.ValueChanged += (_, e) => { S.BitrateKbps = (int)e.NewValue * 1000; bitrateText.Text = $"{(int)e.NewValue} Mbps"; };
@@ -313,7 +304,7 @@ public sealed class SettingsView : Grid
         });
         qualityRow.Visibility = S.ConstantQuality ? Visibility.Visible : Visibility.Collapsed;
         bitrateRow.Visibility = S.ConstantQuality ? Visibility.Collapsed : Visibility.Visible;
-        Card(Row(Loc.T("set.rate"), null, mode, 280), qualityRow, bitrateRow,
+        Card(Row(Loc.T("set.ratemode"), Loc.T("set.ratemode.d"), mode, 280), qualityRow, bitrateRow,
             Row(Loc.T("set.keyframe"), Loc.T("set.keyframe.d"), Combo(new[] { 1, 2, 3, 5, 10 }.Select(k => (k, $"{k} s")), S.KeyframeSeconds, v => S.KeyframeSeconds = v), 120));
     }
 

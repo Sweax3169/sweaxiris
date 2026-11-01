@@ -90,7 +90,7 @@ public static class Theme
         Set(r, "MeterHigh", tally);
         Set(r, "Blade", blade);
         Set(r, "BladeEdge", bladeEdge);
-        Set(r, "Veil", A(Rgb(0x05, 0x07, 0x0A), 0.52));
+        Set(r, "Veil", A(Rgb(0x05, 0x07, 0x0A), 0.6));
         Set(r, "Shadow", A(Colors.Black, Dark ? 0.55 : 0.18));
         Set(r, "Viewfinder", Dark ? Rgb(0x07, 0x08, 0x0A) : Rgb(0x1A, 0x1E, 0x24));
         r["AccentColor"] = accent;

@@ -246,7 +246,7 @@ public sealed class Studio
 
     void HookPreview(Recorder rec)
     {
-        _pump = new PreviewPump(rec.Gpu, 480, 270);
+        _pump = new PreviewPump(rec.Gpu, 960, 540);
         _lastFrame = null;
         int skip = 0;
         _pump.Frame += (px, w, h) =>

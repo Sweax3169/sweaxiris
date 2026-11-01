@@ -92,6 +92,51 @@ footer{padding:46px 0 70px;color:var(--faint);font-size:14px}
 .reveal.in{opacity:1;transform:none}
 .dl{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(--sunken);padding:2px 6px;border-radius:5px}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0 18px}
+.modes button{display:flex;gap:14px;align-items:center;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:14px 18px;color:var(--text);cursor:pointer;font:inherit;transition:transform .45s cubic-bezier(.3,1.5,.5,1),border-color .2s,background .2s}
+.modes button:hover{transform:translateY(-2px);border-color:var(--line2)}
+.modes button:active{transform:scale(.98)}
+.modes button[aria-selected=true]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface))}
+.modes svg{width:28px;height:28px;flex:none;fill:none;stroke:var(--dim);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.modes button[aria-selected=true] svg{stroke:var(--accent)}
+.modes b{display:block;font-weight:600;font-size:16px}
+.modes small{display:block;color:var(--dim);font-size:13px}
+.notes{margin-top:30px}
+.notes p{margin:0;font-size:15px}
+.ticks{padding:0;margin:14px 0;list-style:none}
+.ticks li{position:relative;padding-left:22px;margin:7px 0;color:var(--dim)}
+.ticks li::before{content:"";position:absolute;left:2px;top:.62em;width:9px;height:9px;border:2px solid var(--accent);border-right:0;border-bottom:0}
+.trybox{margin-top:56px}
+.tryhead p{max-width:760px;margin:4px 0 16px}
+.stage{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 70px var(--shadow);outline:none;cursor:crosshair;user-select:none;touch-action:none}
+.stage:focus-visible{border-color:var(--accent)}
+.desk{position:absolute;inset:0;background:linear-gradient(35deg,#0F2A3A,#1D4E5F 50%,#2D6E6A)}
+.win{position:absolute;border-radius:9px;overflow:hidden;box-shadow:2px 6px 0 rgba(0,0,0,.3)}
+.win .bar{height:7%;min-height:16px;font:400 clamp(8px,1vw,12.5px)/1 'Segoe UI',system-ui,sans-serif;display:flex;align-items:center;padding:0 12px}
+.win.dark{background:#1A1E26}.win.dark .bar{background:#232831;color:#C9CFD8}
+.win.light{background:#F6F7F9}.win.light .bar{background:#E9ECF0;color:#30353C}
+.code{position:absolute;inset:12% 5% 6% 4%;display:flex;flex-direction:column;justify-content:space-between}
+.code div{display:flex;gap:2%;height:2.6%}
+.code span{border-radius:3px;height:100%}
+.chart{position:absolute;left:4%;right:4%;top:16%;bottom:6%;width:92%;height:78%}
+.task{position:absolute;left:0;right:0;bottom:0;height:5%;background:rgba(17,21,27,.88)}
+#veil{position:absolute;inset:0;width:100%;height:100%}
+.dock{position:absolute;left:50%;top:3%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:var(--raised);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.35);cursor:default;white-space:nowrap;transition:top .45s cubic-bezier(.3,1.4,.5,1)}
+.dock .seg button{padding:4px 9px}
+.wh{display:flex;align-items:center;gap:5px;font-variant-numeric:tabular-nums}
+.wh small{color:var(--faint);font-size:11px;font-weight:600}
+.wh b{background:var(--sunken);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-weight:500;font-size:13px;min-width:52px;text-align:center}
+.wh i{color:var(--faint);font-style:normal}
+.dock .rec{padding:6px 12px;font-size:13px;gap:7px}
+.dock .rec[disabled]{opacity:.45;cursor:default;transform:none}
+.dockhint{position:absolute;left:50%;top:calc(3% + 50px);transform:translateX(-50%);font-size:12px;color:#E9ECF1;background:rgba(10,12,15,.7);padding:3px 10px;border-radius:6px;pointer-events:none;white-space:nowrap}
+.recchip{position:absolute;display:flex;align-items:center;gap:8px;background:var(--tally);color:#fff;font:600 13px Plex,sans-serif;padding:4px 11px;border-radius:6px;pointer-events:none}
+.recchip .dot{background:#fff;animation:breathe 1.4s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.35}}
+@media (max-width:900px){.modes{grid-template-columns:1fr}.dock{top:2%;transform:translateX(-50%) scale(.7);transform-origin:top center}.dock .seg button{padding:3px 5px;font-size:11px}.wh{display:none}.dockhint{display:none}}
+.new{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:500 13px Plex,sans-serif;color:var(--text);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px 4px 6px;margin-bottom:16px}
+.new b{background:var(--accent);color:var(--accent-ink);border-radius:999px;padding:1px 8px;font-weight:600;font-size:12px}
+.new:hover{border-color:var(--accent)}
 @media (max-width:900px){.hero,.two,.two.rev,.dl{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}nav{display:none}}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 </style>
@@ -101,6 +146,7 @@ code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(-
   <div class="wrap">
     <a class="brand" href="#top"><canvas id="logo" width="56" height="56" style="width:28px;height:28px"></canvas>SweaxIris</a>
     <nav>
+      <a href="#pick" data-i="nav.studio">Studio</a>
       <a href="#region" data-i="nav.region">Region</a>
       <a href="#features" data-i="nav.features">Features</a>
       <a href="#keys" data-i="nav.keys">Shortcuts</a>
@@ -115,6 +161,7 @@ code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(-
 <div class="wrap">
   <div class="hero">
     <div>
+      <a class="new" href="#pick"><b>1.1</b><span data-i="hero.new">The studio, rebuilt — see what changed</span></a>
       <div class="kicker" data-i="hero.kicker">Screen recorder for Windows 10 and 11</div>
       <h1 data-i="hero.title">Opens like a lens.</h1>
       <p class="lead" data-i="hero.lead">Record a screen, a window or a region you draw, with system sound and your microphone. Pause and carry on in the same file. The graphics card's own video engine does the work, so even 1440p at 144 fps keeps every frame.</p>
@@ -132,16 +179,63 @@ code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(-
   <div class="window reveal"><video autoplay muted loop playsinline preload="metadata" id="vrecord" poster="media/main-en-dark.png"><source src="media/record-en-dark.mp4" type="video/mp4"></video></div>
 </div>
 
-<section id="region">
-  <div class="wrap two">
-    <div class="reveal">
-      <div class="kicker" data-i="region.kicker">Region</div>
-      <h2 data-i="region.title">A rectangle in two keys.</h2>
-      <p class="dim" data-i="region.p1">Press the region shortcut. The screens dim and a crosshair follows the mouse. Drag a rectangle (Shift keeps 16:9) or click a window to take its frame. Pull the edges, nudge with the arrows, press Enter.</p>
-      <p class="dim" data-i="region.p2">After the countdown only that rectangle is recorded. A thin frame marks it and the recording bar sits underneath; neither appears in the video.</p>
-      <p><span class="kb"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>A</kbd></span></p>
+<section id="pick">
+  <div class="wrap">
+    <div class="kicker" data-i="pick.kicker">The studio · new in 1.1</div>
+    <h2 data-i="pick.title">Click what you want to record.</h2>
+    <p class="lead" data-i="pick.lead">Every monitor, every open window and your last region wait as live pictures. Choose one and the record strip says exactly what will happen: picture, size, frame rate, quality, encoder and sound.</p>
+    <div class="modes" role="tablist" id="modes">
+      <button role="tab" aria-selected="true" data-mode="main"><svg viewBox="0 0 24 24"><path d="M3.5,5 H20.5 V16 H3.5 Z M9,19.5 H15 M12,16 V19.5"/></svg><span><b data-i="mode.screen">Screen</b><small data-i="mode.screen.d">A whole monitor</small></span></button>
+      <button role="tab" aria-selected="false" data-mode="main-window"><svg viewBox="0 0 24 24"><path d="M3.5,5 H20.5 V19 H3.5 Z M3.5,8.5 H20.5 M6,6.8 H6.1 M8,6.8 H8.1"/></svg><span><b data-i="mode.window">Window</b><small data-i="mode.window.d">One app, even behind others</small></span></button>
+      <button role="tab" aria-selected="false" data-mode="main-region"><svg viewBox="0 0 24 24"><path d="M4,8 V4 H8 M16,4 H20 V8 M20,16 V20 H16 M8,20 H4 V16 M9,9 H15 V15 H9 Z"/></svg><span><b data-i="mode.region">Region</b><small data-i="mode.region.d">A rectangle you draw</small></span></button>
     </div>
-    <div class="window reveal"><video autoplay muted loop playsinline preload="metadata" id="vregion"><source src="media/region-en-dark.mp4" type="video/mp4"></video></div>
+    <div class="stack window reveal" id="modestack"></div>
+    <div class="grid3 notes">
+      <div><h3 data-i="pn1.t">Live pictures</h3><p class="dim" data-i="pn1.p">Tiles refresh a few times a second, the chosen one faster. Hover lifts a tile, choosing it pulls focus. With several monitors a to-scale map shows how they sit.</p></div>
+      <div><h3 data-i="pn2.t">Faders that are meters</h3><p class="dim" data-i="pn2.p">The bar is how loud the source is, the knob is its volume: 0–200 %, a soft click at 100 %, the wheel works too. The device is one click away.</p></div>
+      <div><h3 data-i="pn3.t">The program picture</h3><p class="dim" data-i="pn3.p">While recording, the picker gives way to what is being recorded, large, with REC and the time. Takes and Settings are pages of their own.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="region">
+  <div class="wrap">
+    <div class="two">
+      <div class="reveal">
+        <div class="kicker" data-i="region.kicker">Region</div>
+        <h2 data-i="region.title">A rectangle in two keys.</h2>
+        <p class="dim" data-i="region.p1">Press the region shortcut. Every screen dims and a dock drops in. Hover a window and the frame glides onto it; click to take it, or drag anywhere to draw.</p>
+        <ul class="ticks">
+          <li data-i="region.l1">Frame shapes: Free, 16:9, 9:16 for Shorts and Reels, 1:1, 4:3.</li>
+          <li data-i="region.l2">Exact size: type the pixels, or pick 4K, 1440p, 1080p, 720p, 1080 × 1920.</li>
+          <li data-i="region.l3">Edges snap to windows and screen edges; Alt draws freely.</li>
+          <li data-i="region.l4">A loupe shows the pixel under the pointer, with its colour.</li>
+          <li data-i="region.l5">Arrows nudge, Ctrl + arrows resize, Enter records, Esc cancels.</li>
+        </ul>
+        <p><span class="kb"><kbd>Ctrl</kbd><kbd>Alt</kbd><kbd>A</kbd></span></p>
+      </div>
+      <div class="window reveal"><video autoplay muted loop playsinline preload="metadata" id="vregion"><source src="media/region-en-dark.mp4" type="video/mp4"></video></div>
+    </div>
+    <div class="trybox reveal">
+      <div class="tryhead">
+        <div><h3 data-i="try.title">Try the picker</h3><p class="dim" data-i="try.p">This is the picker's logic, in your browser. Hover a window, click to take it or drag to draw. Choose a shape; edges snap. Arrows nudge, Enter records.</p></div>
+      </div>
+      <div class="stage" id="stage" tabindex="0" aria-label="Region picker demo">
+        <div class="desk">
+          <div class="win dark" style="left:4%;top:7%;width:46%;height:60%" data-title="notes.md — Quill"><div class="bar">notes.md — Quill</div><div class="code"></div></div>
+          <div class="win light" style="left:38%;top:20%;width:56%;height:64%" data-title="Atlas — Live dashboard"><div class="bar">Atlas — Live dashboard</div><svg class="chart" viewBox="0 0 180 90" preserveAspectRatio="none" id="chart"></svg></div>
+          <div class="task"></div>
+        </div>
+        <canvas id="veil"></canvas>
+        <div class="dock" id="dock">
+          <div class="seg" id="shape"></div>
+          <span class="wh"><small>W</small><b id="dw">0</b><i>×</i><small>H</small><b id="dh">0</b></span>
+          <button class="btn accent rec" id="drec" disabled><span class="dot"></span><span data-i="try.rec">Record</span></button>
+        </div>
+        <div class="dockhint" id="dhint"></div>
+        <div class="recchip" id="recchip" hidden><span class="dot"></span><span id="rectc">REC 00:00</span></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -150,24 +244,24 @@ code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(-
     <div class="kicker" data-i="feat.kicker">What it does</div>
     <h2 data-i="feat.title">Everything a recorder should, nothing in the way.</h2>
     <div class="grid3" style="margin-top:28px">
-      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-region-light.svg"><img src="art/feature-region-dark.svg" alt=""></picture><h3 data-i="f1.t">A region in two keys</h3><p data-i="f1.p">Exact to the pixel on every monitor, even with mixed scaling. The last region is remembered.</p></div>
+      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-region-light.svg"><img src="art/feature-region-dark.svg" alt=""></picture><h3 data-i="f1.t">A region in two keys</h3><p data-i="f1.p">Exact to the pixel on every monitor, with frame shapes, typed sizes, snapping and a loupe. The last region is remembered.</p></div>
       <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-pause-light.svg"><img src="art/feature-pause-dark.svg" alt=""></picture><h3 data-i="f2.t">Pause into the same file</h3><p data-i="f2.p">Pausing stops the recording's own clock. Picture and sound follow it, so the file plays straight through.</p></div>
       <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-encoders-light.svg"><img src="art/feature-encoders-dark.svg" alt=""></picture><h3 data-i="f3.t">The graphics card does the work</h3><p data-i="f3.p">NVENC and AMF read frames straight from video memory. H.264, HEVC, AV1; x264 when there is no hardware.</p></div>
-      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-audio-light.svg"><img src="art/feature-audio-dark.svg" alt=""></picture><h3 data-i="f4.t">Sound you control</h3><p data-i="f4.p">System sound and microphone, each with switch, volume, device and meter. Mute on a key, separate tracks, one app only.</p></div>
+      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-audio-light.svg"><img src="art/feature-audio-dark.svg" alt=""></picture><h3 data-i="f4.t">Sound you control</h3><p data-i="f4.p">System sound and microphone, each with a switch, a device and a fader that is also its meter. Mute on a key, separate tracks, one app only.</p></div>
       <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-macro-light.svg"><img src="art/feature-macro-dark.svg" alt=""></picture><h3 data-i="f5.t">Macro keys welcome</h3><p data-i="f5.p">Every shortcut is set by pressing it. Pause, Scroll Lock and F13–F24 work on their own: perfect for a G key.</p></div>
-      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-hidden-light.svg"><img src="art/feature-hidden-dark.svg" alt=""></picture><h3 data-i="f6.t">Never in its own video</h3><p data-i="f6.p">The studio, the bar, the frame and the countdown are kept out of every capture by Windows itself.</p></div>
+      <div class="card reveal"><picture><source media="(prefers-color-scheme: light)" srcset="art/feature-hidden-light.svg"><img src="art/feature-hidden-dark.svg" alt=""></picture><h3 data-i="f6.t">Never in its own video</h3><p data-i="f6.p">The studio, the bar, the region picker, the frame and the countdown are kept out of every capture by Windows itself.</p></div>
     </div>
   </div>
 </section>
 
 <section id="studio">
   <div class="wrap">
-    <div class="kicker" data-i="studio.kicker">The studio</div>
-    <h2 data-i="studio.title">A live viewfinder, and the iris.</h2>
-    <p class="lead" data-i="studio.lead">See exactly what will be recorded. Pick a monitor on a map of your desk, a window from a list with icons, or your region. Sound meters move before you press record.</p>
+    <div class="kicker" data-i="studio.kicker">Inside the studio</div>
+    <h2 data-i="studio.title">Recording, takes and every setting.</h2>
+    <p class="lead" data-i="studio.lead">While recording, the picker gives way to the program picture. Takes and Settings are pages of their own, every shortcut included.</p>
     <div class="tabs" role="tablist" id="shots">
-      <button role="tab" data-shot="main" aria-selected="true" data-i="tab.idle">Ready</button>
-      <button role="tab" data-shot="main-recording" data-i="tab.rec">Recording</button>
+      <button role="tab" data-shot="main-recording" aria-selected="true" data-i="tab.rec">Recording</button>
+      <button role="tab" data-shot="library" data-i="tab.takes">Takes</button>
       <button role="tab" data-shot="settings-keys" data-i="tab.keys">Shortcuts</button>
       <button role="tab" data-shot="settings-video" data-i="tab.video">Video settings</button>
       <button role="tab" data-shot="settings-sound" data-i="tab.sound">Sound settings</button>
@@ -253,23 +347,32 @@ code{font-family:Consolas,ui-monospace,monospace;font-size:14px;background:var(-
 <script>
 const T = {
   tr: {
-    'nav.region':'Bölge','nav.features':'Özellikler','nav.keys':'Kısayollar','nav.measured':'Ölçümler','nav.download':'İndir',
+    'nav.studio':'Stüdyo','nav.region':'Bölge',
+    'hero.new':'Stüdyo baştan yapıldı — nelerin değiştiğine bak',
+    'pick.kicker':'Stüdyo · 1.1\'de yeni','pick.title':'Neyi kaydetmek istiyorsan ona tıkla.','pick.lead':'Her monitör, açık her pencere ve son bölgen canlı görüntü olarak bekler. Birini seç; kayıt şeridi ne olacağını tam söyler: görüntü, boyut, kare hızı, kalite, kodlayıcı ve ses.',
+    'mode.screen':'Ekran','mode.screen.d':'Bütün bir monitör','mode.window':'Pencere','mode.window.d':'Tek uygulama, arkada kalsa bile','mode.region':'Bölge','mode.region.d':'Çizdiğin bir dikdörtgen',
+    'pn1.t':'Canlı görüntüler','pn1.p':'Kartlar saniyede birkaç kez, seçili olan daha sık tazelenir. Üstüne gelince kart kalkar, seçince netlik oturur. Birden çok monitörde ölçekli bir harita nasıl dizildiklerini gösterir.',
+    'pn2.t':'Ölçer olan sürgüler','pn2.p':'Çubuk kaynağın ne kadar gür olduğu, topuz ses düzeyi: %0–200, %100\'de yumuşak bir tık, tekerlek de çalışır. Aygıt bir tık ötede.',
+    'pn3.t':'Yayın görüntüsü','pn3.p':'Kayıtta seçici yerini kaydedilen görüntüye bırakır; büyük, REC ve süreyle. Çekimler ve Ayarlar kendi sayfaları.',
+    'region.l1':'Çerçeve oranı: Serbest, 16:9, Shorts ve Reels için 9:16, 1:1, 4:3.','region.l2':'Tam boyut: pikseli yaz ya da 4K, 1440p, 1080p, 720p, 1080 × 1920 seç.','region.l3':'Kenarlar pencerelere ve ekran kenarlarına yapışır; Alt serbest çizer.','region.l4':'Büyüteç imlecin altındaki pikseli rengiyle gösterir.','region.l5':'Oklar kaydırır, Ctrl + oklar boyutlar, Enter kaydeder, Esc vazgeçer.',
+    'try.title':'Seçiciyi dene','try.p':'Bu, seçicinin mantığı, tarayıcında. Bir pencerenin üstüne gel, almak için tıkla ya da sürükleyerek çiz. Bir oran seç; kenarlar yapışır. Oklar kaydırır, Enter kaydeder.','try.rec':'Kaydet','try.free':'Serbest',
+    'try.hint.hover':'Pencereye tıkla ya da sürükleyerek çiz · Shift 16:9 · Alt yapışmasız','try.hint.adjust':'Kenarları çek · oklar kaydırır, Ctrl+oklar boyutlar · Enter ya da çift tık kaydeder','try.hint.rec':'Kaydediliyor — Esc durdurur',
+    'tab.takes':'Çekimler','nav.features':'Özellikler','nav.keys':'Kısayollar','nav.measured':'Ölçümler','nav.download':'İndir',
     'hero.kicker':'Windows 10 ve 11 için ekran kaydedici','hero.title':'Lens gibi açılır.',
     'hero.lead':'Bir ekranı, bir pencereyi ya da çizdiğin bölgeyi; sistem sesi ve mikrofonla kaydet. Duraklat, aynı dosyada devam et. İşi ekran kartının kendi video motoru yapar; 1440p 144 fps bile tek kare kaçırmaz.',
     'hero.dl':'Windows için indir','hero.small':'Ücretsiz · çevrimdışı · GPL v3 · NVENC · AMF · Quick Sync · x264',
     'iris.try':'Diyaframa tıkla','iris.count':'Hazırlan','iris.rec':'KAYIT','iris.pause':'DURAKLADI','iris.saved':'Kaydedildi',
     'region.kicker':'Bölge','region.title':'İki tuşla bir dikdörtgen.',
-    'region.p1':'Bölge kısayoluna bas. Ekranlar kararır, fareyi bir artı işareti izler. Bir dikdörtgen sürükle (Shift 16:9 tutar) ya da çerçevesini almak için bir pencereye tıkla. Kenarları çek, oklarla kaydır, Enter\'a bas.',
-    'region.p2':'Geri sayımdan sonra yalnız o dikdörtgen kaydedilir. İnce bir çerçeve onu işaretler, kayıt çubuğu altında durur; ikisi de videoya girmez.',
+    'region.p1':'Bölge kısayoluna bas. Her ekran kararır, üstte bir panel iner. Bir pencerenin üstüne gel, çerçeve ona kayar; almak için tıkla ya da herhangi bir yerde sürükleyerek çiz.',
     'feat.kicker':'Ne yapar','feat.title':'Bir kaydedicide olması gereken her şey; yolda hiçbir şey.',
-    'f1.t':'İki tuşla bölge','f1.p':'Her monitörde, farklı ölçeklerde bile pikseli pikseline. Son bölge hatırlanır.',
+    'f1.t':'İki tuşla bölge','f1.p':'Her monitörde pikseli pikseline; çerçeve oranları, yazılan boyutlar, yapışma ve büyüteçle. Son bölge hatırlanır.',
     'f2.t':'Aynı dosyada duraklat','f2.p':'Duraklatmak kaydın kendi saatini durdurur. Görüntü ve ses onu izler; dosya baştan sona oynar.',
     'f3.t':'İşi ekran kartı yapar','f3.p':'NVENC ve AMF kareleri doğrudan video belleğinden okur. H.264, HEVC, AV1; donanım yoksa x264.',
-    'f4.t':'Sesi sen yönet','f4.p':'Sistem sesi ve mikrofon; her birinde anahtar, düzey, aygıt ve ölçer. Tuşla sustur, ayrı kanallar, yalnız bir uygulama.',
+    'f4.t':'Sesi sen yönet','f4.p':'Sistem sesi ve mikrofon; her birinde anahtar, aygıt ve aynı zamanda ölçer olan bir sürgü. Tuşla sustur, ayrı kanallar, yalnız bir uygulama.',
     'f5.t':'Makro tuşlarına açık','f5.p':'Her kısayol basılarak atanır. Pause, Scroll Lock ve F13–F24 tek başına çalışır: bir G tuşu için ideal.',
-    'f6.t':'Kendi videosuna girmez','f6.p':'Stüdyo, çubuk, çerçeve ve geri sayım, Windows tarafından her yakalamanın dışında tutulur.',
-    'studio.kicker':'Stüdyo','studio.title':'Canlı vizör ve diyafram.','studio.lead':'Neyin kaydedileceğini tam olarak gör. Masanın haritasından bir monitör, simgeli listeden bir pencere ya da bölgeni seç. Ses ölçerleri kayda basmadan önce oynar.',
-    'tab.idle':'Hazır','tab.rec':'Kayıtta','tab.keys':'Kısayollar','tab.video':'Görüntü ayarları','tab.sound':'Ses ayarları','tab.bar':'Kayıt çubuğu',
+    'f6.t':'Kendi videosuna girmez','f6.p':'Stüdyo, çubuk, bölge seçici, çerçeve ve geri sayım, Windows tarafından her yakalamanın dışında tutulur.',
+    'studio.kicker':'Stüdyonun içi','studio.title':'Kayıt, çekimler ve her ayar.','studio.lead':'Kayıtta seçici yerini yayın görüntüsüne bırakır. Çekimler ve Ayarlar kendi sayfaları; her kısayol dahil.',
+    'tab.rec':'Kayıtta','tab.keys':'Kısayollar','tab.video':'Görüntü ayarları','tab.sound':'Ses ayarları','tab.bar':'Kayıt çubuğu',
     'keys.kicker':'Kısayollar','keys.title':'Senin tuşların. Makro tuşların da.','keys.th1':'İş','keys.th2':'Varsayılan',
     'keys.r1':'Kaydı başlat / durdur','keys.r2':'Duraklat / devam','keys.r3':'Bölge kaydet','keys.r4':'Mikrofonu sustur',
     'keys.macro':'Monster Pusat K3 Pro\'da: REC → G1 → Pause → REC ile G1 Pause\'a basar. Sonra Ayarlar\'da bir kısayola tıkla ve G1\'e bas.',
@@ -288,6 +391,7 @@ const T = {
 const EN = {};
 document.querySelectorAll('[data-i]').forEach(e => EN[e.dataset.i] = e.textContent);
 EN['iris.try']='Click the iris';EN['iris.count']='Get ready';EN['iris.rec']='REC';EN['iris.pause']='PAUSED';EN['iris.saved']='Saved';
+EN['try.hint.hover']='Click a window or drag to draw · Shift 16:9 · Alt without snapping';EN['try.hint.adjust']='Pull the edges · arrows nudge, Ctrl+arrows resize · Enter or double-click records';EN['try.hint.rec']='Recording — Esc stops';EN['try.free']='Free';
 EN['test.alone']='Can be a shortcut on its own.';EN['test.combo']='Can be a shortcut.';EN['test.need']='Not on its own: add Ctrl or Alt, or use Pause, Scroll Lock, F13–F24.';
 let lang = (localStorage.getItem('iris-lang') || (navigator.language || 'en').slice(0,2)) === 'tr' ? 'tr' : 'en';
 const t = k => (lang === 'tr' ? T.tr[k] : EN[k]) ?? EN[k] ?? k;
@@ -301,6 +405,8 @@ function applyLang() {
   swapVideo('vregion', `media/region-${lang}-${th}.mp4`);
   document.getElementById('palimg').src = `media/palettes-${lang}-${th}.png`;
   buildShots();
+  buildModes();
+  picker.buildShapes();
   capText();
 }
 function swapVideo(id, src, poster) {
@@ -421,6 +527,230 @@ function paintCoats() {
   sw.querySelectorAll('button').forEach(b => { const k = b.dataset.key; b.setAttribute('aria-pressed', k === coatKey); drawIris(b.querySelector('canvas').getContext('2d'), 116, k === coatKey ? .62 : .3, 0, coat[k][dark() ? 0 : 1], 0, false); b.lastChild.textContent = names[k][lang === 'tr' ? 1 : 0]; });
   capText();
 }
+
+// ── the studio's three modes, like the buttons in the app ──
+function buildModes() {
+  const th = dark() ? 'dark' : 'light', stack = document.getElementById('modestack'), on = document.querySelector('#modes [aria-selected=true]').dataset.mode;
+  stack.innerHTML = '';
+  document.querySelectorAll('#modes button').forEach(b => { const img = new Image(); img.alt = b.querySelector('b').textContent; img.src = `media/${b.dataset.mode}-${lang}-${th}.png`; if (b.dataset.mode === on) img.className = 'on'; img.dataset.shot = b.dataset.mode; stack.appendChild(img); });
+}
+document.querySelectorAll('#modes button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('#modes button').forEach(x => x.setAttribute('aria-selected', x === b));
+  document.querySelectorAll('#modestack img').forEach(i => i.classList.toggle('on', i.dataset.shot === b.dataset.mode));
+});
+
+// ── the region picker, the same rules as UI/RegionSelector.cs, on a made-up 2560 × 1440 desktop ──
+const picker = (() => {
+  const stage = document.getElementById('stage'), cvs = document.getElementById('veil'), g = cvs.getContext('2d');
+  const VW = 2560, VH = 1440, SNAP = 16, MIN = 64;
+  const shapes = [['free', 0], ['16:9', 16 / 9], ['9:16', 9 / 16], ['1:1', 1], ['4:3', 4 / 3]];
+  const wins = [...stage.querySelectorAll('.win')].map(el => ({ el, title: el.dataset.title }));
+  let aspect = 0, phase = 'hover', sel = null, start = null, anchor = null, grip = null, hover = -1, glide = null;
+  let guideX = null, guideY = null, cur = null, free = false, rec = null;
+
+  // the editor's code lines and the dashboard's live chart
+  const code = document.createElement('div'); code.className = 'code'; wins[0].el.appendChild(code);
+  const cols = ['#7AA2F7', '#C3E88D', '#F78C6C', '#89DDFF', '#C792EA']; let seed = 4; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 16; i++) { const d = document.createElement('div'); d.style.paddingLeft = i % 4 ? '5%' : '0'; for (let k = 0; k < 4; k++) { const s = document.createElement('span'); s.style.width = (6 + rnd() * 14) + '%'; s.style.background = cols[Math.floor(rnd() * 5)]; d.appendChild(s); } code.appendChild(d); }
+  const chart = document.getElementById('chart');
+  function drawChart(t) {
+    let h = ''; for (let i = 0; i < 18; i++) { const v = Math.max(.06, .45 + .25 * Math.sin(i * .7 + t * 1.4) + .15 * Math.cos(i * 1.9 - t)); h += `<rect x="${i * 10 + 2}" y="${(90 - 80 * v).toFixed(1)}" width="6" height="${(80 * v).toFixed(1)}" rx="1" fill="#9EB8F5"/>`; }
+    let p = ''; for (let i = 0; i <= 60; i++) { const v = .55 + .25 * Math.sin(i * .25 + t * 1.8) + .1 * Math.sin(i * .9 - t * 2.6); p += `${i ? 'L' : 'M'}${i * 3},${(90 - 80 * v).toFixed(1)}`; }
+    chart.innerHTML = h + `<path d="${p}" fill="none" stroke="#2C5BE0" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`;
+  }
+
+  const box = () => stage.getBoundingClientRect();
+  const rect = el => { const r = el.getBoundingClientRect(), s = box(), k = VW / s.width; return { l: (r.left - s.left) * k, t: (r.top - s.top) * k, r: (r.right - s.left) * k, b: (r.bottom - s.top) * k }; };
+  const edges = () => { const xs = [0, VW], ys = [0, VH * .95]; wins.forEach(w => { const r = rect(w.el); xs.push(r.l, r.r); ys.push(r.t, r.b); }); return { xs, ys }; };
+  const P = e => { const s = box(), k = VW / s.width; return { x: Math.max(0, Math.min(VW, (e.clientX - s.left) * k)), y: Math.max(0, Math.min(VH, (e.clientY - s.top) * k)) }; };
+  const nearest = (v, list) => { let best = null; if (free) return null; for (const e of list) { const d = e - v; if (Math.abs(d) <= SNAP && (!best || Math.abs(d) < Math.abs(best.d))) best = { d, e }; } return best; };
+  function snap(v, list, axis) { const n = nearest(v, list); if (!n) return v; if (axis === 'x') guideX = n.e; else guideY = n.e; return n.e; }
+
+  function gripAt(p) {
+    if (!sel) return null;
+    const t = 26, l = Math.abs(p.x - sel.l) <= t, r = Math.abs(p.x - sel.r) <= t, tp = Math.abs(p.y - sel.t) <= t, b = Math.abs(p.y - sel.b) <= t;
+    const inX = p.x > sel.l - t && p.x < sel.r + t, inY = p.y > sel.t - t && p.y < sel.b + t;
+    if (tp && l) return 'nw'; if (tp && r) return 'ne'; if (b && l) return 'sw'; if (b && r) return 'se';
+    if (tp && inX) return 'n'; if (b && inX) return 's'; if (l && inY) return 'w'; if (r && inY) return 'e';
+    return p.x > sel.l && p.x < sel.r && p.y > sel.t && p.y < sel.b ? 'move' : null;
+  }
+  const cursors = { move: 'move', n: 'ns-resize', s: 'ns-resize', e: 'ew-resize', w: 'ew-resize', ne: 'nesw-resize', sw: 'nesw-resize', nw: 'nwse-resize', se: 'nwse-resize' };
+
+  function updateHover(p) {
+    hover = -1;
+    for (let i = wins.length - 1; i >= 0; i--) { const r = rect(wins[i].el); if (p.x >= r.l && p.x <= r.r && p.y >= r.t && p.y <= r.b) { hover = i; break; } }
+  }
+
+  stage.addEventListener('pointerdown', e => {
+    if (e.target.closest('.dock') || rec) return;
+    stage.focus({ preventScroll: true });
+    stage.setPointerCapture(e.pointerId);
+    const p = P(e); cur = p; free = e.altKey; guideX = guideY = null;
+    if (phase === 'adjust') { grip = gripAt(p); if (grip) { anchor = p; start = { ...sel }; return; } }
+    if (phase === 'hover') updateHover(p);
+    const { xs, ys } = edges();
+    phase = 'draw'; anchor = { x: snap(p.x, xs, 'x'), y: snap(p.y, ys, 'y') }; sel = { l: anchor.x, t: anchor.y, r: anchor.x, b: anchor.y };
+  });
+  stage.addEventListener('pointermove', e => {
+    if (e.target.closest('.dock') && !(e.buttons & 1)) { stage.style.cursor = 'default'; return; }
+    const p = P(e); cur = p; free = e.altKey; guideX = guideY = null;
+    const { xs, ys } = edges();
+    if (rec) return;
+    if (phase === 'draw') {
+      let x1 = snap(p.x, xs, 'x'), y1 = snap(p.y, ys, 'y');
+      const ratio = aspect || (e.shiftKey ? 16 / 9 : 0);
+      if (ratio) {
+        const sx = x1 >= anchor.x ? 1 : -1, sy = y1 >= anchor.y ? 1 : -1;
+        let w = Math.abs(x1 - anchor.x), h = Math.abs(y1 - anchor.y);
+        if (w > h * ratio) h = w / ratio; else w = h * ratio;
+        const mw = sx > 0 ? VW - anchor.x : anchor.x, mh = sy > 0 ? VH - anchor.y : anchor.y;
+        if (w > mw) { w = mw; h = w / ratio; } if (h > mh) { h = mh; w = h * ratio; }
+        x1 = anchor.x + sx * w; y1 = anchor.y + sy * h; guideX = guideY = null;
+      }
+      sel = { l: Math.min(anchor.x, x1), t: Math.min(anchor.y, y1), r: Math.max(anchor.x, x1), b: Math.max(anchor.y, y1) };
+    } else if (phase === 'adjust' && grip && (e.buttons & 1)) adjust(p, xs, ys, e.shiftKey);
+    else if (phase === 'hover') updateHover(p);
+    stage.style.cursor = phase === 'adjust' ? (cursors[grip || gripAt(p)] || 'crosshair') : 'crosshair';
+  });
+  stage.addEventListener('pointerup', e => {
+    if (phase === 'draw') {
+      if (sel.r - sel.l < 16 || sel.b - sel.t < 16) sel = hover >= 0 ? rect(wins[hover].el) : { l: 0, t: 0, r: VW, b: VH };
+      phase = 'adjust'; hover = -1; glide = null;
+    }
+    grip = null; guideX = guideY = null;
+  });
+  stage.addEventListener('pointerleave', () => { if (phase === 'hover') { hover = -1; cur = null; } });
+  stage.addEventListener('dblclick', e => { if (phase === 'adjust' && !e.target.closest('.dock')) record(); });
+
+  function adjust(p, xs, ys, shift) {
+    let dx = p.x - anchor.x, dy = p.y - anchor.y; const r = { ...start };
+    if (grip === 'move') {
+      dx = Math.max(-r.l, Math.min(VW - r.r, dx)); dy = Math.max(-r.t, Math.min(VH - r.b, dy));
+      r.l += dx; r.r += dx; r.t += dy; r.b += dy;
+      const pick = (a, b) => a && (!b || Math.abs(a.d) <= Math.abs(b.d)) ? a : b;
+      const mx = pick(nearest(r.l, xs), nearest(r.r, xs)), my = pick(nearest(r.t, ys), nearest(r.b, ys));
+      if (mx) { r.l += mx.d; r.r += mx.d; guideX = mx.e; } if (my) { r.t += my.d; r.b += my.d; guideY = my.e; }
+      sel = r; return;
+    }
+    if (grip.includes('w')) r.l = Math.min(r.r - MIN, snap(r.l + dx, xs, 'x'));
+    if (grip.includes('e')) r.r = Math.max(r.l + MIN, snap(r.r + dx, xs, 'x'));
+    if (grip.includes('n')) r.t = Math.min(r.b - MIN, snap(r.t + dy, ys, 'y'));
+    if (grip.includes('s')) r.b = Math.max(r.t + MIN, snap(r.b + dy, ys, 'y'));
+    const ratio = aspect || (shift ? 16 / 9 : 0);
+    if (ratio) {
+      let w = r.r - r.l, h = r.b - r.t;
+      if (grip === 'e' || grip === 'w') { h = w / ratio; const cy = (start.t + start.b) / 2; r.t = cy - h / 2; r.b = cy + h / 2; guideY = null; }
+      else if (grip === 'n' || grip === 's') { w = h * ratio; const cx = (start.l + start.r) / 2; r.l = cx - w / 2; r.r = cx + w / 2; guideX = null; }
+      else { if (w > h * ratio) { h = w / ratio; guideY = null; } else { w = h * ratio; guideX = null; } if (grip.includes('w')) r.l = r.r - w; else r.r = r.l + w; if (grip.includes('n')) r.t = r.b - h; else r.b = r.t + h; }
+    }
+    r.l = Math.max(0, r.l); r.t = Math.max(0, r.t); r.r = Math.min(VW, r.r); r.b = Math.min(VH, r.b);
+    sel = r;
+  }
+
+  stage.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { reset(); e.preventDefault(); return; }
+    if (phase !== 'adjust' || rec) return;
+    if (e.key === 'Enter') { record(); e.preventDefault(); return; }
+    const step = e.shiftKey ? 40 : 4; let dx = 0, dy = 0;
+    if (e.key === 'ArrowLeft') dx = -step; if (e.key === 'ArrowRight') dx = step; if (e.key === 'ArrowUp') dy = -step; if (e.key === 'ArrowDown') dy = step;
+    if (!dx && !dy) return;
+    e.preventDefault();
+    if (e.ctrlKey) { sel.r = Math.min(VW, Math.max(sel.l + MIN, sel.r + dx)); sel.b = Math.min(VH, Math.max(sel.t + MIN, sel.b + dy)); }
+    else { dx = Math.max(-sel.l, Math.min(VW - sel.r, dx)); dy = Math.max(-sel.t, Math.min(VH - sel.b, dy)); sel.l += dx; sel.r += dx; sel.t += dy; sel.b += dy; }
+  });
+
+  function reset() { phase = 'hover'; sel = null; grip = null; rec = null; document.getElementById('recchip').hidden = true; }
+  function record() { if (phase !== 'adjust' || rec) return; rec = { t0: performance.now() }; }
+  document.getElementById('drec').onclick = () => record();
+
+  // the shape buttons in the dock
+  const shapeBox = document.getElementById('shape');
+  function buildShapes() {
+    shapeBox.innerHTML = '';
+    shapes.forEach(([label, ratio]) => {
+      const b = document.createElement('button'); b.textContent = label === 'free' ? t('try.free') : label; b.setAttribute('aria-pressed', ratio === aspect);
+      b.onclick = () => { setAspect(ratio); buildShapes(); stage.focus({ preventScroll: true }); };
+      shapeBox.appendChild(b);
+    });
+  }
+  function setAspect(ratio) {
+    aspect = ratio;
+    if (phase === 'adjust' && ratio) {
+      let w = sel.r - sel.l, h = sel.b - sel.t; if (w > h * ratio) w = h * ratio; else h = w / ratio;
+      const cx = (sel.l + sel.r) / 2, cy = (sel.t + sel.b) / 2; sel = { l: cx - w / 2, t: cy - h / 2, r: cx + w / 2, b: cy + h / 2 };
+    }
+  }
+
+  function shapeName(w, h) {
+    const a = w / h; for (const [label, ratio] of shapes.slice(1)) if (Math.abs(a - ratio) < .006) return label; return '';
+  }
+  function pill(text, dimText, x, y, above) {
+    g.font = `600 30px Plex, sans-serif`; const w1 = g.measureText(text).width; g.font = `500 28px Plex, sans-serif`; const w2 = dimText ? g.measureText(dimText).width + 20 : 0;
+    const w = w1 + w2 + 36, h = 50; let bx = Math.max(8, Math.min(VW - w - 8, x)), by = above ? y - h - 14 : y + 14; if (by < 8) by = y + 14;
+    g.fillStyle = 'rgba(10,12,15,.9)'; g.beginPath(); g.roundRect(bx, by, w, h, 12); g.fill();
+    g.fillStyle = '#fff'; g.font = `600 30px Plex, sans-serif`; g.textBaseline = 'middle'; g.fillText(text, bx + 18, by + h / 2 + 1);
+    if (dimText) { g.fillStyle = 'rgba(255,255,255,.65)'; g.font = `500 28px Plex, sans-serif`; g.fillText(dimText, bx + 18 + w1 + 20, by + h / 2 + 1); }
+  }
+
+  let frameNo = 0;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    const s = box(); if (s.bottom < 0 || s.top > innerHeight) return;
+    if (frameNo++ % 3 === 0) drawChart(now / 1000);
+    const dpr = devicePixelRatio || 1, W = Math.round(s.width * dpr), H = Math.round(s.height * dpr);
+    if (cvs.width !== W || cvs.height !== H) { cvs.width = W; cvs.height = H; }
+    const k = W / VW; g.setTransform(k, 0, 0, k, 0, 0); g.clearRect(0, 0, VW, VH);
+    const ac = css('--accent');
+    // the hover frame glides from window to window
+    const target = phase === 'hover' && hover >= 0 ? rect(wins[hover].el) : null;
+    if (target) { if (!glide) glide = { ...target }; else for (const key of ['l', 't', 'r', 'b']) glide[key] += (target[key] - glide[key]) * .24; } else glide = null;
+    const hole = phase === 'hover' ? glide : sel;
+    g.fillStyle = 'rgba(5,7,10,.6)'; g.beginPath(); g.rect(0, 0, VW, VH); if (hole) g.rect(hole.l, hole.t, hole.r - hole.l, hole.b - hole.t); g.fill('evenodd');
+    if (phase === 'hover' && glide) {
+      g.fillStyle = hexA(ac, .1); g.fillRect(glide.l, glide.t, glide.r - glide.l, glide.b - glide.t);
+      g.strokeStyle = ac; g.lineWidth = 5; g.strokeRect(glide.l, glide.t, glide.r - glide.l, glide.b - glide.t);
+      const tr = rect(wins[hover].el); pill(wins[hover].title, `${Math.round(tr.r - tr.l)} × ${Math.round(tr.b - tr.t)}`, glide.l, glide.t, true);
+    }
+    g.setLineDash([12, 10]); g.strokeStyle = hexA(ac, .75); g.lineWidth = 2.5;
+    if (guideX != null) { g.beginPath(); g.moveTo(guideX, 0); g.lineTo(guideX, VH); g.stroke(); }
+    if (guideY != null) { g.beginPath(); g.moveTo(0, guideY); g.lineTo(VW, guideY); g.stroke(); }
+    g.setLineDash([]);
+    if (sel && phase !== 'hover') {
+      const w = sel.r - sel.l, h = sel.b - sel.t;
+      g.strokeStyle = 'rgba(255,255,255,.82)'; g.lineWidth = 2.5; g.strokeRect(sel.l, sel.t, w, h);
+      if (phase === 'draw' || grip) { g.strokeStyle = 'rgba(255,255,255,.25)'; g.lineWidth = 2; g.beginPath(); for (let i = 1; i < 3; i++) { g.moveTo(sel.l + w * i / 3, sel.t); g.lineTo(sel.l + w * i / 3, sel.b); g.moveTo(sel.l, sel.t + h * i / 3); g.lineTo(sel.r, sel.t + h * i / 3); } g.stroke(); }
+      const kk = Math.min(56, Math.min(w, h) / 3), live = rec && now - rec.t0 > 1800;
+      g.strokeStyle = live ? css('--tally') : ac; g.lineWidth = 8; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath();
+      g.moveTo(sel.l, sel.t + kk); g.lineTo(sel.l, sel.t); g.lineTo(sel.l + kk, sel.t); g.moveTo(sel.r - kk, sel.t); g.lineTo(sel.r, sel.t); g.lineTo(sel.r, sel.t + kk);
+      g.moveTo(sel.r, sel.b - kk); g.lineTo(sel.r, sel.b); g.lineTo(sel.r - kk, sel.b); g.moveTo(sel.l + kk, sel.b); g.lineTo(sel.l, sel.b); g.lineTo(sel.l, sel.b - kk); g.stroke();
+      if (phase === 'adjust' && !rec) { g.fillStyle = '#fff'; g.strokeStyle = ac; g.lineWidth = 4; for (const [x, y] of [[sel.l + w / 2, sel.t], [sel.l + w / 2, sel.b], [sel.l, sel.t + h / 2], [sel.r, sel.t + h / 2]]) { g.beginPath(); g.arc(x, y, 12, 0, 7); g.fill(); g.stroke(); } }
+      const shape = shapeName(w, h); pill(`${Math.round(w)} × ${Math.round(h)}`, shape || null, sel.l, sel.t, true);
+    }
+    if (phase === 'hover' && cur) { g.setLineDash([8, 8]); g.strokeStyle = 'rgba(255,255,255,.5)'; g.lineWidth = 2; g.beginPath(); g.moveTo(cur.x, 0); g.lineTo(cur.x, VH); g.moveTo(0, cur.y); g.lineTo(VW, cur.y); g.stroke(); g.setLineDash([]); }
+    // record: 3-2-1 over the region, then the tally and the time
+    const chip = document.getElementById('recchip');
+    if (rec) {
+      const el = now - rec.t0;
+      if (el < 1800) {
+        const n = 3 - Math.floor(el / 600), cx = (sel.l + sel.r) / 2, cy = (sel.t + sel.b) / 2, f = (el % 600) / 600;
+        g.fillStyle = 'rgba(0,0,0,.45)'; g.beginPath(); g.arc(cx, cy, 120, 0, 7); g.fill();
+        g.strokeStyle = css('--tally'); g.lineWidth = 10; g.beginPath(); g.arc(cx, cy, 108, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * (1 - f)); g.stroke();
+        g.fillStyle = '#fff'; g.font = '600 110px Plex, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(n, cx, cy + 6); g.textAlign = 'start';
+      } else if (el < 7800) {
+        const sec = Math.floor((el - 1800) / 1000);
+        chip.hidden = false; document.getElementById('rectc').textContent = `REC 00:0${sec}`;
+        chip.style.left = (sel.l / VW * s.width) + 'px'; chip.style.top = Math.min(s.height - 30, sel.b / VH * s.height + 8) + 'px';
+      } else { chip.hidden = true; rec = null; }
+    }
+    // the dock
+    const shown = phase === 'hover' ? (hover >= 0 ? rect(wins[hover].el) : { l: 0, t: 0, r: VW, b: VH }) : sel;
+    document.getElementById('dw').textContent = Math.round(shown.r - shown.l); document.getElementById('dh').textContent = Math.round(shown.b - shown.t);
+    document.getElementById('drec').disabled = phase !== 'adjust' || !!rec;
+    document.getElementById('dhint').textContent = t(rec ? 'try.hint.rec' : phase === 'adjust' ? 'try.hint.adjust' : 'try.hint.hover');
+  }
+  requestAnimationFrame(frame);
+  return { buildShapes };
+})();
 
 // ── gentle reveal (nothing pins the scroll) ──
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });

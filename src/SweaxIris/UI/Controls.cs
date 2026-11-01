@@ -27,6 +27,14 @@ public static class Press
     public static void SetEnabled(DependencyObject d, bool v) => d.SetValue(EnabledProperty, v);
 }
 
+/// <summary>A plain "this one is chosen" flag that styles can react to.</summary>
+public static class Mark
+{
+    public static readonly DependencyProperty OnProperty = DependencyProperty.RegisterAttached("On", typeof(bool), typeof(Mark), new FrameworkPropertyMetadata(false));
+    public static bool GetOn(DependencyObject d) => (bool)d.GetValue(OnProperty);
+    public static void SetOn(DependencyObject d, bool v) => d.SetValue(OnProperty, v);
+}
+
 /// <summary>A stroked 24×24 line icon in the current text colour.</summary>
 public sealed class Ico : FrameworkElement
 {

@@ -27,7 +27,7 @@ public static class Shots
     public static void Run(App app, string[] args)
     {
         string? Arg(string a) { int i = Array.FindIndex(args, x => x.Equals(a, StringComparison.OrdinalIgnoreCase)); return i >= 0 && i + 1 < args.Length ? args[i + 1] : null; }
-        _dir = Arg("--shots") ?? Path.Combine(Path.GetTempPath(), "sweaxiris-shots");
+        _dir = Path.GetFullPath(Arg("--shots") ?? Path.Combine(Path.GetTempPath(), "sweaxiris-shots"));
         string theme = Arg("--theme") ?? "dark", lang = Arg("--lang") ?? "en", palette = Arg("--palette") ?? "coating";
         var only = Arg("--only")?.Split(',').ToHashSet();
         bool Want(string n) => only == null || only.Contains(n);
@@ -45,6 +45,7 @@ public static class Shots
             {
                 if (Want("main")) MainStill();
                 if (Want("settings")) SettingsStills();
+                if (Want("library")) LibraryStill();
                 if (Want("palettes")) Palettes(theme);
                 if (Want("bar")) BarStill();
                 if (Want("select")) SelectStill();
@@ -71,11 +72,40 @@ public static class Shots
         MainWindow.DemoSystemDevice = Loc.Turkish ? "Hoparlörler" : "Speakers";
         MainWindow.DemoMicDevice = Loc.Turkish ? "Stüdyo mikrofonu" : "Studio microphone";
         MainWindow.DemoSource = ("Main 27", 2560, 1440);
+        // made-up pictures for every tile of the source picker
+        var pics = new Dictionary<string, BitmapSource>();
+        MainWindow.DemoPicture = key =>
+        {
+            if (pics.TryGetValue(key, out var b)) return b;
+            if (key.StartsWith("mon:")) key = key.EndsWith("DISPLAY2") ? "d2" : key.EndsWith("DISPLAY3") ? "d3" : "d1";
+            b = key switch
+            {
+                "d1" => Game(3.2, 640, 360),
+                "d2" => Snap.Render(new DesktopScene { Time = 1 }, 1280, 720, 0.5),
+                "d3" => Snap.Render(new DesktopScene { Time = 4 }, 540, 960, 0.6),
+                "win:1" => Game(6.5, 640, 360),
+                "win:2" => Crop(Snap.Render(new DesktopScene { Time = 2 }, 1280, 720, 1), 0.38, 0.2, 0.56, 0.64),
+                "win:3" => Crop(Snap.Render(new DesktopScene { Time = 2 }, 1280, 720, 1), 0.04, 0.07, 0.46, 0.6),
+                "win:4" => Snap.Render(new GameScene { Time = 9 }, 480, 300, 1),
+                _ when key.StartsWith("reg:") => Crop(Snap.Render(new DesktopScene { Time = 3 }, 1280, 720, 1), 0.38, 0.2, 0.56, 0.64),
+                _ => null,
+            };
+            if (b != null) pics[key] = b;
+            return b;
+        };
+    }
+
+    static BitmapSource Crop(BitmapSource b, double x, double y, double w, double h)
+    {
+        var r = new Int32Rect((int)(b.PixelWidth * x), (int)(b.PixelHeight * y), (int)(b.PixelWidth * w), (int)(b.PixelHeight * h));
+        var c = new CroppedBitmap(b, r);
+        c.Freeze();
+        return c;
     }
 
     static Studio NewStudio()
     {
-        var s = new Settings { Monitor = @"\\.\DISPLAY1", Microphone = true, Fps = 60, Resolution = 1440, Quality = 0.72, KeyRecord = "Ctrl+Alt+R", KeyRegion = "Ctrl+Alt+A", KeyPause = "Pause", KeyMic = "Ctrl+Alt+M" };
+        var s = new Settings { Monitor = @"\\.\DISPLAY1", Microphone = true, Fps = 60, Resolution = 1440, Quality = 0.72, KeyRecord = "Ctrl+Alt+R", KeyRegion = "Ctrl+Alt+A", KeyPause = "Pause", KeyMic = "Ctrl+Alt+M", LastRegion = [972, 288, 2406, 1209], OutputFolder = Path.Combine("D:" + Path.DirectorySeparatorChar, "Videos", "SweaxIris") };
         var studio = new Studio(s, Application.Current.Dispatcher);
         studio.DemoEncoders();
         return studio;
@@ -132,6 +162,14 @@ public static class Shots
         main.ShowFrame(Game(3.2));
         Settle(30);
         Snap.Save(Stage((FrameworkElement)main.Content, main.ActualWidth, main.ActualHeight), Out("main"));
+        foreach (var mode in new[] { "window", "region" })
+        {
+            main.DemoMode(mode);
+            Settle(40);
+            Snap.Save(Stage((FrameworkElement)main.Content, main.ActualWidth, main.ActualHeight), Out("main-" + mode));
+        }
+        main.DemoMode("screen");
+        Settle(30);
 
         studio.DemoSet(CaptureTarget.Screen(IntPtr.Zero));
         studio.DemoElapsed = TimeSpan.FromSeconds(83);
@@ -143,6 +181,34 @@ public static class Shots
         Settle(60);
         main.Tick();
         Snap.Save(Stage((FrameworkElement)main.Content, main.ActualWidth, main.ActualHeight), Out("main-recording"));
+        main.Close();
+    }
+
+    static void LibraryStill()
+    {
+        var studio = NewStudio();
+        var scenes = new Func<int, BitmapSource>[]
+        {
+            i => Game(2 + i * 3.1, 480, 270),
+            i => Crop(Snap.Render(new DesktopScene { Time = i }, 1280, 720, 1), 0.38, 0.2, 0.56, 0.64),
+            i => Snap.Render(new DesktopScene { Time = i }, 960, 540, 0.5),
+        };
+        var rng = new Random(7);
+        var when = DateTime.Now;
+        var takes = new List<Take>();
+        for (int i = 0; i < 9; i++)
+        {
+            var thumb = Path.Combine(_dir, "frames", $"lib-{i}-{_suffix}.jpg");
+            SaveJpeg(scenes[i % 3](i), thumb);
+            double secs = 20 + rng.Next(600);
+            when = when.AddMinutes(-(i == 0 ? 2 : 37 + rng.Next(400)));
+            takes.Add(new Take(Path.Combine("C:", "Videos", "SweaxIris", $"take-{i}.mp4"), when, secs, (long)(secs * (1.5e6 + rng.NextDouble() * 2e6)), i % 3 == 1 ? 1434 : 2560, i % 3 == 1 ? 921 : 1440, i % 2 == 0 ? 60 : 144, "NVIDIA NVENC · H.264", thumb, 0));
+        }
+        for (int i = takes.Count - 1; i >= 0; i--) studio.DemoSaved(takes[i]);
+        var main = OpenMain(studio);
+        main.DemoPage("library");
+        Settle(50);
+        Snap.Save(Stage((FrameworkElement)main.Content, main.ActualWidth, main.ActualHeight), Out("library"));
         main.Close();
     }
 
@@ -205,11 +271,19 @@ public static class Shots
         var desk = new DesktopScene { Time = 2 };
         var deskBmp = Snap.Render(desk, w, h, 1);
         var sel = new Rect(desk.ChartWindow.X + 12, desk.ChartWindow.Y + 40, desk.ChartWindow.Width - 24, desk.ChartWindow.Height - 52);
-        var overlay = RegionSelector.DemoVisual(w, h, sel, "adjust", new Point(sel.Right - 40, sel.Bottom - 30), null);
+        var overlay = RegionSelector.DemoVisual(w, h, sel, "adjust", new Point(sel.Right - 40, sel.Bottom - 30), null, deskBmp);
         var g = new Grid { Width = w, Height = h };
         g.Children.Add(new Image { Source = deskBmp });
         g.Children.Add(overlay);
         Snap.Save(Stage(g, w, h, 1.25, 30), Out("select"));
+        // choosing: the frame on a window, the loupe at the pointer
+        var cur = new Point(desk.ChartWindow.X + 222, desk.ChartWindow.Y + 354);
+        var hover = RegionSelector.DemoVisual(w, h, Rect.Empty, "hover", cur, desk.ChartWindow, deskBmp);
+        var g2 = new Grid { Width = w, Height = h };
+        g2.Children.Add(new Image { Source = deskBmp });
+        g2.Children.Add(hover);
+        g2.Children.Add(Pointer(cur, "hover"));
+        Snap.Save(Stage(g2, w, h, 1.25, 30), Out("select-hover"));
     }
 
     // ── films (PNG frames) ──────────────────────────────────────────────────
@@ -222,7 +296,10 @@ public static class Shots
         public void Frame(BitmapSource b) => Snap.Save(b, Path.Combine(_dir, $"{_n++:00000}.png"));
     }
 
-    /// <summary>Main window: hover, click, 3-2-1, recording with the take growing, pause, resume, stop, the take lands.</summary>
+    /// <summary>
+    /// The studio at work: Screen, then Window, a tile hovered and chosen, back to Screen, hover the iris, 3-2-1,
+    /// the picker gives way to the program picture, pause, resume, stop, and the take lands in Takes.
+    /// </summary>
     static async Task FilmRecord()
     {
         var studio = NewStudio();
@@ -230,6 +307,7 @@ public static class Shots
         var film = new Film("record");
         film.Start();
         double t = 0;
+        bool live = false;
         var rng = new Random(3);
         float sys = 0, mic = 0;
         studio.DemoSystemPeak = () => sys;
@@ -242,37 +320,58 @@ public static class Shots
                 sys = (float)(0.25 + 0.2 * Math.Abs(Math.Sin(t * 7)) + rng.NextDouble() * 0.15);
                 mic = (float)(Math.Sin(t * 1.3) > 0.2 ? 0.1 + rng.NextDouble() * 0.25 : 0.01);
                 each?.Invoke(i);
-                main.ShowFrame(Game(t, 640, 360));
+                if (live) main.ShowFrame(Game(t, 640, 360));
                 Springs.Step(1 / Fps);
                 Pump();
                 main.Tick();
                 film.Frame(Stage((FrameworkElement)main.Content, main.ActualWidth, main.ActualHeight, 1.25, 28));
             }
         }
-        Step(20);
+        Step(24);
+        main.DemoMode("window");
+        Step(26);
+        main.DemoTile(1, "hover");
+        Step(14);
+        main.DemoTile(1, "pick");
+        Step(22);
+        main.DemoTile(1, "leave");
+        main.DemoMode("screen");
+        Step(26);
+        main.DemoTile(1, "hover");
+        Step(10);
+        main.DemoTile(1, "leave");
+        main.DemoTile(2, "hover");
+        Step(12);
+        main.DemoTile(2, "pick");
+        Step(18);
+        main.DemoTile(2, "leave");
         main.DemoHover(true);
-        Step(16);
+        Step(14);
         studio.DemoSet(CaptureTarget.Screen(IntPtr.Zero));
         studio.DemoSet(StudioState.Arming);
-        for (int n = 3; n >= 1; n--) { main.DemoCount(n); Step(24); }
+        for (int n = 3; n >= 1; n--) { main.DemoCount(n); Step(22); }
         main.DemoCount(0);
         main.DemoHover(false);
         studio.DemoElapsed = TimeSpan.Zero;
+        live = true;
         studio.DemoSet(StudioState.Recording);
         double rec = 0;
         Step(80, _ => { rec += 1 / Fps * 9; studio.DemoElapsed = TimeSpan.FromSeconds(rec); studio.DemoBytes = (long)(rec * 2.6e6); });
         studio.DemoSet(StudioState.Paused);
-        Step(40);
+        Step(36);
         studio.DemoSet(StudioState.Recording);
-        Step(50, _ => { rec += 1 / Fps * 9; studio.DemoElapsed = TimeSpan.FromSeconds(rec); studio.DemoBytes = (long)(rec * 2.6e6); });
+        Step(44, _ => { rec += 1 / Fps * 9; studio.DemoElapsed = TimeSpan.FromSeconds(rec); studio.DemoBytes = (long)(rec * 2.6e6); });
         studio.DemoSet(StudioState.Finishing);
         Step(12);
-        var thumb = Path.Combine(_dir, "frames", "take-thumb.jpg");
+        live = false;
+        var thumb = Path.Combine(_dir, "frames", $"take-thumb-{_suffix}.jpg"); // one per run, the four runs go in parallel
         SaveJpeg(Game(t, 480, 270), thumb);
         studio.DemoSet(StudioState.Idle);
-        studio.DemoSaved(new Take("C:\\Videos\\SweaxIris\\take.mp4", DateTime.Now, rec, (long)(rec * 2.6e6), 2560, 1440, 60, "NVIDIA NVENC · H.264", thumb, 0));
+        studio.DemoSaved(new Take(Path.Combine("C:", "Videos", "SweaxIris", "take.mp4"), DateTime.Now, rec, (long)(rec * 2.6e6), 2560, 1440, 60, "NVIDIA NVENC · H.264", thumb, 0));
         main.BuildTakes();
-        Step(50);
+        Step(30);
+        main.DemoPage("library");
+        Step(46);
         main.Close();
         await Task.CompletedTask;
     }
@@ -304,7 +403,7 @@ public static class Shots
             g.Children.Add(new Image { Source = deskBmp });
             if (f < 130)
             {
-                g.Children.Add(RegionSelector.DemoVisual(w, h, sel, phase, cursor, phase == "hover" && f > 20 ? chart : null));
+                g.Children.Add(RegionSelector.DemoVisual(w, h, sel, phase, cursor, phase == "hover" && f > 20 ? chart : null, deskBmp));
                 g.Children.Add(Pointer(cursor, phase));
             }
             else g.Children.Add(DemoRecording(w, h, sel, f - 130));

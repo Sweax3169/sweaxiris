@@ -1,0 +1,48 @@
+name: Something went wrong
+description: A recording failed, a key did nothing, the picture or sound is off.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for telling us. The log at `%APPDATA%\SweaxIris\sweaxiris.log` says what SweaxIris saw; please attach it.
+        Türkçe yazabilirsin.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps
+      placeholder: |
+        1. Window → chose a game
+        2. Pressed Ctrl Alt R
+        3. ...
+  - type: input
+    id: version
+    attributes:
+      label: SweaxIris version
+      description: Settings → bottom left, or the file name of the installer.
+      placeholder: 1.1.0
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+  - type: input
+    id: gpu
+    attributes:
+      label: Graphics card and encoder
+      placeholder: RTX 4070 SUPER · NVENC H.264
+  - type: textarea
+    id: log
+    attributes:
+      label: Log
+      description: Drag sweaxiris.log here, or paste the last lines.
+      render: text

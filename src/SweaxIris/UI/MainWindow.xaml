@@ -3,238 +3,256 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:ui="clr-namespace:SweaxIris.UI"
         xmlns:core="clr-namespace:SweaxIris.Core"
-        Title="SweaxIris" Width="1060" Height="760" MinWidth="880" MinHeight="640"
+        Title="SweaxIris" Width="1120" Height="800" MinWidth="960" MinHeight="680"
         WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="CanResize"
         Background="{DynamicResource Bg}" Foreground="{DynamicResource Text}"
         FontFamily="{StaticResource Plex}" FontSize="13" UseLayoutRounding="True"
         TextOptions.TextFormattingMode="Display">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="48" ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" UseAeroCaptionButtons="False"/>
+        <WindowChrome CaptionHeight="56" ResizeBorderThickness="6" GlassFrameThickness="0" CornerRadius="0" UseAeroCaptionButtons="False"/>
     </WindowChrome.WindowChrome>
 
     <Grid x:Name="Root">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
+            <RowDefinition Height="56"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- title bar -->
+        <!-- a soft light from the lens, behind everything -->
+        <Ellipse Grid.RowSpan="3" Width="900" Height="420" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-260,0,0" IsHitTestVisible="False" Opacity="0.55">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop x:Name="GlowStop" Color="{DynamicResource AccentColor}" Offset="0"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <!-- title bar: name, pages, window buttons -->
         <Grid Grid.Row="0">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="16,0,0,0">
-                <ui:Iris x:Name="Logo" Width="24" Height="24" ShowScale="False" Aperture="0.42"/>
-                <TextBlock Text="SweaxIris" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="15" Margin="10,0,0,1" VerticalAlignment="Center"/>
-                <TextBlock x:Name="Tagline" Style="{StaticResource Faint}" FontSize="12.5" Margin="10,1,0,0" VerticalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,0,0">
+                <ui:Iris x:Name="Logo" Width="26" Height="26" ShowScale="False" Aperture="0.42"/>
+                <TextBlock Text="SweaxIris" FontWeight="SemiBold" FontSize="15.5" Margin="10,0,0,1" VerticalAlignment="Center"/>
             </StackPanel>
+            <Canvas x:Name="TabsHost" HorizontalAlignment="Center" VerticalAlignment="Center" Width="360" Height="56">
+                <StackPanel x:Name="Tabs" Orientation="Horizontal" Canvas.Left="0" Canvas.Top="0" Height="56" WindowChrome.IsHitTestVisibleInChrome="True"/>
+                <Border x:Name="TabMark" Height="3" CornerRadius="1.5" Background="{DynamicResource Accent}" Canvas.Top="50" Width="40">
+                    <Border.RenderTransform><TranslateTransform x:Name="TabMove"/></Border.RenderTransform>
+                </Border>
+            </Canvas>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Border x:Name="RecChip" CornerRadius="7" Background="{DynamicResource TallySoft}" Padding="10,4" VerticalAlignment="Center" Margin="0,0,10,0" Visibility="Collapsed">
                     <StackPanel Orientation="Horizontal">
                         <Ellipse x:Name="RecDot" Width="8" Height="8" Fill="{DynamicResource Tally}" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="RecChipText" Margin="7,0,0,0" FontFamily="{StaticResource Plex}" FontWeight="Medium" FontSize="12.5" Foreground="{DynamicResource Text}"/>
+                        <TextBlock x:Name="RecChipText" Margin="7,0,0,0" FontWeight="Medium" FontSize="12.5"/>
                     </StackPanel>
                 </Border>
-                <Button x:Name="SettingsButton" Style="{StaticResource IconBtn}" WindowChrome.IsHitTestVisibleInChrome="True" Margin="0,0,6,0" ToolTip="{core:L settings}">
-                    <ui:Ico Data="{StaticResource IcoGear}" Width="19" Height="19"/>
-                </Button>
                 <Button x:Name="MinButton" Style="{StaticResource ChromeBtn}" WindowChrome.IsHitTestVisibleInChrome="True"><ui:Ico Data="{StaticResource IcoMin}" Width="14" Height="14" Stroke="1.3"/></Button>
                 <Button x:Name="MaxButton" Style="{StaticResource ChromeBtn}" WindowChrome.IsHitTestVisibleInChrome="True"><ui:Ico Data="{StaticResource IcoMax}" Width="12" Height="12" Stroke="1.3"/></Button>
                 <Button x:Name="CloseButton" Style="{StaticResource CloseBtn}" WindowChrome.IsHitTestVisibleInChrome="True"><ui:Ico Data="{StaticResource IcoClose}" Width="13" Height="13" Stroke="1.3"/></Button>
             </StackPanel>
         </Grid>
 
-        <!-- body -->
-        <Grid Grid.Row="1" Margin="16,2,16,14">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="16"/>
-                <ColumnDefinition Width="336"/>
-            </Grid.ColumnDefinitions>
-
-            <!-- viewfinder and the record deck -->
-            <Grid Grid.Column="0">
+        <!-- pages -->
+        <Grid Grid.Row="1">
+            <!-- RECORD -->
+            <Grid x:Name="RecordPage" Margin="32,6,32,18">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Border x:Name="Finder" CornerRadius="12" Background="{DynamicResource Viewfinder}" ClipToBounds="True" BorderBrush="{DynamicResource Line}" BorderThickness="1">
-                    <Grid>
-                        <Image x:Name="Preview" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality" Margin="18"/>
-                        <StackPanel x:Name="FinderEmpty" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.75">
-                            <ui:Iris Width="64" Height="64" ShowScale="False" Aperture="0.12"/>
-                            <TextBlock x:Name="FinderEmptyText" Margin="0,12,0,0" HorizontalAlignment="Center" Foreground="#9AA3B0" FontSize="13"/>
-                        </StackPanel>
-                        <!-- viewfinder marks -->
-                        <Path x:Name="Brackets" Stroke="#BFFFFFFF" StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" IsHitTestVisible="False"/>
-                        <Border VerticalAlignment="Top" HorizontalAlignment="Left" Margin="14" CornerRadius="6" Background="#99090B0E" Padding="9,4">
-                            <TextBlock x:Name="SourceChip" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource Plex}" FontWeight="Medium"/>
-                        </Border>
-                        <Border x:Name="FinderRec" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="14" CornerRadius="6" Background="#99090B0E" Padding="9,4" Visibility="Collapsed">
-                            <StackPanel Orientation="Horizontal">
-                                <Ellipse x:Name="FinderDot" Width="8" Height="8" Fill="{DynamicResource Tally}" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="FinderRecText" Margin="7,0,0,0" Foreground="#E9ECF1" FontSize="12" FontFamily="{StaticResource Plex}" FontWeight="Medium"/>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-                </Border>
 
-                <!-- deck: summary · iris · timer -->
-                <Grid Grid.Row="1" Margin="0,12,0,0" Height="124">
+                <!-- step 1: what -->
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="12"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="12"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock x:Name="OutSize" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="16"/>
-                        <TextBlock x:Name="OutLine" Style="{StaticResource Dim}" Margin="0,3,0,0"/>
-                        <TextBlock x:Name="OutLine2" Style="{StaticResource Faint}" Margin="0,2,0,0"/>
-                    </StackPanel>
-                    <Grid Grid.Column="1" HorizontalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="64"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="64"/>
-                        </Grid.ColumnDefinitions>
-                        <Button x:Name="PauseButton" Grid.Column="0" Style="{StaticResource Btn}" Width="46" Height="46" Padding="0" HorizontalAlignment="Left" Opacity="0" IsHitTestVisible="False">
-                            <ui:Ico x:Name="PauseIco" Data="{StaticResource IcoPause}" Width="20" Height="20" Stroke="2.2"/>
-                        </Button>
-                        <Grid x:Name="RecordHost" Grid.Column="1" Width="120" Height="120" Cursor="Hand" Background="Transparent">
-                            <ui:Iris x:Name="RecordIris" Aperture="0.18"/>
-                            <TextBlock x:Name="CountText" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="34" Foreground="White" Opacity="0" IsHitTestVisible="False"/>
-                        </Grid>
-                        <Button x:Name="MicButton" Grid.Column="2" Style="{StaticResource Btn}" Width="46" Height="46" Padding="0" HorizontalAlignment="Right" Opacity="0" IsHitTestVisible="False">
-                            <ui:Ico x:Name="MicIco" Data="{StaticResource IcoMic}" Width="20" Height="20"/>
-                        </Button>
-                    </Grid>
-                    <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <TextBlock x:Name="Timecode" Text="00:00:00" FontFamily="{StaticResource Plex}" FontWeight="Light" FontSize="34" HorizontalAlignment="Right"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,2,0,0">
-                            <TextBlock x:Name="StatusText" Style="{StaticResource Dim}" VerticalAlignment="Center"/>
-                            <ContentControl x:Name="RecordKeys" Margin="8,0,0,0" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </StackPanel>
+                    <Button x:Name="ModeScreen" Grid.Column="0" Style="{StaticResource ModeBtn}" Tag="screen"/>
+                    <Button x:Name="ModeWindow" Grid.Column="2" Style="{StaticResource ModeBtn}" Tag="window"/>
+                    <Button x:Name="ModeRegion" Grid.Column="4" Style="{StaticResource ModeBtn}" Tag="region"/>
                 </Grid>
+
+                <!-- the pictures to choose from -->
+                <Grid Grid.Row="1" Margin="0,18,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <TextBlock x:Name="PickTitle" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Border x:Name="SearchBox" Width="230" Height="32" CornerRadius="8" Background="{DynamicResource Raised}" BorderBrush="{DynamicResource Line}" BorderThickness="1" Visibility="Collapsed">
+                                <Grid>
+                                    <ui:Ico Data="{StaticResource IcoSearch}" Width="15" Height="15" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="{DynamicResource TextFaint}"/>
+                                    <TextBox x:Name="Search" Margin="28,0,4,0" BorderThickness="0" Background="Transparent" Padding="2,5"/>
+                                </Grid>
+                            </Border>
+                            <Button x:Name="RefreshWindows" Style="{StaticResource IconBtn}" Margin="6,0,0,0" Visibility="Collapsed"><ui:Ico Data="{StaticResource IcoRefresh}" Width="16" Height="16"/></Button>
+                        </StackPanel>
+                    </Grid>
+                    <!-- tiles fill the page width; the scroll bar sits out in the page margin, and the hover lift is not clipped -->
+                    <ScrollViewer x:Name="PickScroll" Grid.Row="1" Margin="0,8,-22,0" Style="{StaticResource TileScroll}">
+                        <WrapPanel x:Name="Picks" Orientation="Horizontal" Margin="6,6,-30,0"/>
+                    </ScrollViewer>
+                    <!-- while recording: the program picture, large -->
+                    <Border x:Name="LiveView" Grid.RowSpan="2" CornerRadius="12" ClipToBounds="True" Background="{DynamicResource Viewfinder}" BorderBrush="{DynamicResource Tally}" BorderThickness="2" Visibility="Collapsed">
+                        <Grid>
+                            <Image x:Name="LivePicture" Stretch="Uniform" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Border x:Name="LiveChip" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14" CornerRadius="6" Background="{DynamicResource Tally}" Padding="9,4,11,4">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse x:Name="LiveDot" Width="8" Height="8" Fill="White" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="LiveText" Foreground="White" FontWeight="SemiBold" FontSize="12.5"/>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock x:Name="LiveNote" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="16,12" FontSize="12" Foreground="#CCFFFFFF"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- step 2: sound and picture, on one deck -->
+                <Border Grid.Row="2" Margin="0,16,0,0" Style="{StaticResource Deck}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1"/>
+                        <ColumnDefinition Width="1.15*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Grid.Column="1" Background="{DynamicResource Line}" Margin="0,14"/>
+                    <Border Grid.Column="3" Background="{DynamicResource Line}" Margin="0,14"/>
+                    <!-- system sound -->
+                    <Border Style="{StaticResource Panel}">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="SysToggle" Style="{StaticResource ChannelBtn}"><ui:Ico x:Name="SysIco" Data="{StaticResource IcoSpeaker}" Width="20" Height="20"/></ToggleButton>
+                            <StackPanel Grid.Column="1" Margin="12,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{core:L sound.system}" FontWeight="SemiBold" FontSize="13.5"/>
+                                <ComboBox x:Name="SysDevice" Style="{StaticResource LinkCombo}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="SysPct" Grid.Column="2" Style="{StaticResource Dim}" VerticalAlignment="Center" FontSize="12.5"/>
+                            <ui:Fader x:Name="SysFader" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
+                        </Grid>
+                    </Border>
+                    <!-- microphone -->
+                    <Border Grid.Column="2" Style="{StaticResource Panel}">
+                        <Grid>
+                            <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="MicToggle" Style="{StaticResource ChannelBtn}"><ui:Ico x:Name="MicRowIco" Data="{StaticResource IcoMic}" Width="20" Height="20"/></ToggleButton>
+                            <StackPanel Grid.Column="1" Margin="12,0,8,0" VerticalAlignment="Center">
+                                <TextBlock Text="{core:L sound.mic}" FontWeight="SemiBold" FontSize="13.5"/>
+                                <ComboBox x:Name="MicDevice" Style="{StaticResource LinkCombo}"/>
+                            </StackPanel>
+                            <TextBlock x:Name="MicPct" Grid.Column="2" Style="{StaticResource Dim}" VerticalAlignment="Center" FontSize="12.5"/>
+                            <ui:Fader x:Name="MicFader" Grid.Row="1" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
+                        </Grid>
+                    </Border>
+                    <!-- picture -->
+                    <Border Grid.Column="4" Style="{StaticResource Panel}">
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/><ColumnDefinition Width="8"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                                <StackPanel><TextBlock Text="{core:L set.res}" Style="{StaticResource Faint}" Margin="2,0,0,4"/><ComboBox x:Name="ResCombo"/></StackPanel>
+                                <StackPanel Grid.Column="2"><TextBlock Text="{core:L set.fps}" Style="{StaticResource Faint}" Margin="2,0,0,4"/><ComboBox x:Name="FpsCombo"/></StackPanel>
+                                <StackPanel Grid.Column="4"><TextBlock Text="{core:L set.rate}" Style="{StaticResource Faint}" Margin="2,0,0,4"/><ComboBox x:Name="QualityCombo"/></StackPanel>
+                            </Grid>
+                            <Grid Margin="2,10,0,0">
+                                <TextBlock x:Name="EncoderLine" Style="{StaticResource Faint}" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis" Margin="0,0,90,0"/>
+                                <Button x:Name="MoreVideo" Style="{StaticResource LinkBtn}" HorizontalAlignment="Right" Content="{core:L more.settings}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+                </Border>
             </Grid>
 
-            <!-- right column -->
-            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,-6,0" Padding="0,0,6,0">
-                <StackPanel>
-                    <!-- source -->
-                    <Border CornerRadius="12" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="1" Padding="14">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Section}" Text="{core:L src.screen}" x:Name="SourceTitle"/>
-                            <ui:Segments x:Name="SourceSeg"/>
-                            <Grid x:Name="SourceBody" Margin="0,12,0,0" MinHeight="118">
-                                <!-- screen -->
-                                <StackPanel x:Name="ScreenPane">
-                                    <Canvas x:Name="MonitorMap" Height="96" ClipToBounds="False"/>
-                                    <TextBlock x:Name="MonitorLabel" Style="{StaticResource Dim}" Margin="0,8,0,0" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
-                                </StackPanel>
-                                <!-- window -->
-                                <Grid x:Name="WindowPane" Visibility="Collapsed">
-                                    <ScrollViewer MaxHeight="168" VerticalScrollBarVisibility="Auto">
-                                        <StackPanel x:Name="WindowList"/>
-                                    </ScrollViewer>
-                                </Grid>
-                                <!-- region -->
-                                <StackPanel x:Name="RegionPane" Visibility="Collapsed">
-                                    <TextBlock x:Name="RegionSize" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="22"/>
-                                    <TextBlock x:Name="RegionWhere" Style="{StaticResource Dim}" Margin="0,2,0,10"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="DrawRegion" Style="{StaticResource BtnAccent}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <ui:Ico Data="{StaticResource IcoRegion}" Width="16" Height="16" Margin="0,0,7,0"/>
-                                                <TextBlock x:Name="DrawRegionText"/>
-                                            </StackPanel>
-                                        </Button>
-                                        <ContentControl x:Name="RegionKeys" Margin="12,0,0,0" VerticalAlignment="Center"/>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- sound -->
-                    <Border CornerRadius="12" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="1" Padding="14" Margin="0,12,0,0">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Section}" Text="{core:L sound}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                                <ui:Ico Data="{StaticResource IcoSpeaker}" Width="18" Height="18" Foreground="{DynamicResource TextDim}"/>
-                                <StackPanel Grid.Column="1" Margin="10,0,8,0" VerticalAlignment="Center">
-                                    <TextBlock Style="{StaticResource Label}" Text="{core:L sound.system}"/>
-                                    <TextBlock x:Name="SysDeviceText" Style="{StaticResource Faint}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
-                                </StackPanel>
-                                <ui:Toggle x:Name="SysToggle" Grid.Column="2" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Margin="28,8,0,0">
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="96"/></Grid.ColumnDefinitions>
-                                <ui:LevelMeter x:Name="SysMeter" VerticalAlignment="Center"/>
-                                <Slider x:Name="SysVolume" Grid.Column="1" Minimum="0" Maximum="2" Margin="10,0,0,0" ToolTip="Volume"/>
-                            </Grid>
-                            <Border Height="1" Background="{DynamicResource Line}" Margin="0,12"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                                <ui:Ico x:Name="MicRowIco" Data="{StaticResource IcoMic}" Width="18" Height="18" Foreground="{DynamicResource TextDim}"/>
-                                <StackPanel Grid.Column="1" Margin="10,0,8,0" VerticalAlignment="Center">
-                                    <TextBlock Style="{StaticResource Label}" Text="{core:L sound.mic}"/>
-                                    <TextBlock x:Name="MicDeviceText" Style="{StaticResource Faint}" TextTrimming="CharacterEllipsis" TextWrapping="NoWrap"/>
-                                </StackPanel>
-                                <ui:Toggle x:Name="MicToggle" Grid.Column="2" VerticalAlignment="Center"/>
-                            </Grid>
-                            <Grid Margin="28,8,0,0">
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="96"/></Grid.ColumnDefinitions>
-                                <ui:LevelMeter x:Name="MicMeter" VerticalAlignment="Center"/>
-                                <Slider x:Name="MicVolume" Grid.Column="1" Minimum="0" Maximum="2" Margin="10,0,0,0"/>
-                            </Grid>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- video -->
-                    <Border CornerRadius="12" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="1" Padding="14" Margin="0,12,0,0">
-                        <StackPanel>
-                            <TextBlock Style="{StaticResource Section}" Text="{core:L video}"/>
-                            <Grid>
-                                <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="10"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                                <ComboBox x:Name="ResCombo"/>
-                                <ComboBox x:Name="FpsCombo" Grid.Column="2"/>
-                            </Grid>
-                            <ui:Segments x:Name="QualitySeg" Margin="0,10,0,0"/>
-                            <TextBlock x:Name="EncoderLine" Style="{StaticResource Faint}" Margin="0,10,0,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
-            </ScrollViewer>
-        </Grid>
-
-        <!-- takes -->
-        <Border Grid.Row="2" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="0,1,0,0" Padding="16,10,16,14">
-            <StackPanel>
+            <!-- LIBRARY -->
+            <Grid x:Name="LibraryPage" Margin="32,10,32,18" Visibility="Collapsed">
+                <Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions>
                 <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <ui:Ico Data="{StaticResource IcoFilm}" Width="16" Height="16" Foreground="{DynamicResource TextDim}"/>
-                        <TextBlock Text="{core:L takes}" FontFamily="{StaticResource Plex}" FontWeight="SemiBold" FontSize="13" Margin="8,0,0,0" VerticalAlignment="Center"/>
-                        <TextBlock x:Name="TakesCount" Style="{StaticResource Faint}" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                    <StackPanel>
+                        <TextBlock Text="{core:L takes}" FontWeight="SemiBold" FontSize="20"/>
+                        <TextBlock x:Name="TakesCount" Style="{StaticResource Dim}" Margin="0,2,0,0"/>
                     </StackPanel>
-                    <Button x:Name="OpenFolder" Style="{StaticResource BtnGhost}" HorizontalAlignment="Right" Padding="10,4">
+                    <Button x:Name="OpenFolder" Style="{StaticResource Btn}" HorizontalAlignment="Right" VerticalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
-                            <ui:Ico Data="{StaticResource IcoFolder}" Width="15" Height="15" Margin="0,0,6,0"/>
-                            <TextBlock Text="{core:L takes.folder}" FontSize="12.5"/>
+                            <ui:Ico Data="{StaticResource IcoFolder}" Width="16" Height="16" Margin="0,0,8,0"/>
+                            <TextBlock Text="{core:L takes.folder}"/>
                         </StackPanel>
                     </Button>
                 </Grid>
-                <Grid Height="124" Margin="0,8,0,0">
-                    <ScrollViewer x:Name="TakesScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                        <StackPanel x:Name="TakesRow" Orientation="Horizontal"/>
-                    </ScrollViewer>
-                    <TextBlock x:Name="TakesEmpty" Text="{core:L takes.empty}" Style="{StaticResource Faint}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Grid>
-            </StackPanel>
-        </Border>
+                <ScrollViewer Grid.Row="1" Margin="0,12,-22,0" Style="{StaticResource TileScroll}">
+                    <WrapPanel x:Name="TakesRow" Margin="6,6,-30,0"/>
+                </ScrollViewer>
+                <StackPanel x:Name="TakesEmpty" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ui:Iris Width="96" Height="96" ShowScale="False" Aperture="0.1"/>
+                    <TextBlock Text="{core:L takes.empty}" Style="{StaticResource Dim}" FontSize="14" Margin="0,14,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
 
-        <!-- settings slide over everything below the title bar -->
-        <Border x:Name="SettingsHost" Grid.Row="1" Grid.RowSpan="2" Background="{DynamicResource Bg}" Visibility="Collapsed">
-            <Border.RenderTransform><TranslateTransform x:Name="SettingsMove"/></Border.RenderTransform>
+            <!-- SETTINGS -->
+            <Border x:Name="SettingsHost" Visibility="Collapsed"/>
+        </Grid>
+
+        <!-- the record strip -->
+        <Border Grid.Row="2" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="0,1,0,0" Padding="32,14,24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- the chosen source, live -->
+                <Border Width="128" Height="72" CornerRadius="8" ClipToBounds="True" Background="{DynamicResource Viewfinder}" BorderBrush="{DynamicResource Line}" BorderThickness="1">
+                    <Grid>
+                        <Image x:Name="Preview" Stretch="Uniform"/>
+                        <ui:Ico x:Name="PreviewIco" Data="{StaticResource IcoScreen}" Width="26" Height="26" Foreground="#606976"/>
+                    </Grid>
+                </Border>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0,16,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse x:Name="StripDot" Width="9" Height="9" Fill="{DynamicResource Tally}" VerticalAlignment="Center" Margin="0,0,8,0" Visibility="Collapsed"/>
+                        <TextBlock x:Name="StripTitle" FontWeight="SemiBold" FontSize="16" TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <TextBlock x:Name="StripSub" Style="{StaticResource Dim}" FontSize="12.5" Margin="0,3,0,0" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock x:Name="Timecode" Text="00:00:00" FontWeight="Light" FontSize="30" VerticalAlignment="Center" Margin="0,0,18,2" Visibility="Collapsed"/>
+                    <Button x:Name="PauseButton" Style="{StaticResource Btn}" Height="52" Padding="16,0" Margin="0,0,8,0" Visibility="Collapsed">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Ico x:Name="PauseIco" Data="{StaticResource IcoPause}" Width="18" Height="18" Stroke="2.2"/>
+                            <TextBlock x:Name="PauseText" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="MicButton" Style="{StaticResource Btn}" Width="52" Height="52" Padding="0" Margin="0,0,8,0" Visibility="Collapsed">
+                        <ui:Ico x:Name="MicIco" Data="{StaticResource IcoMic}" Width="19" Height="19"/>
+                    </Button>
+                    <!-- record / stop: the iris and its words -->
+                    <Border x:Name="RecordHost" Height="64" MinWidth="236" CornerRadius="14" Cursor="Hand" Padding="8,0,20,0"
+                            Background="{DynamicResource Raised}" BorderBrush="{DynamicResource Line}" BorderThickness="1">
+                        <Border.RenderTransform><ScaleTransform x:Name="RecordScale"/></Border.RenderTransform>
+                        <Grid>
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="Auto"/><ColumnDefinition/></Grid.ColumnDefinitions>
+                            <Grid Width="54" Height="54">
+                                <ui:Iris x:Name="RecordIris" ShowScale="False" Aperture="0.2"/>
+                                <TextBlock x:Name="CountText" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="20" Foreground="White" Opacity="0" IsHitTestVisible="False"/>
+                            </Grid>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="12,0,0,0">
+                                <TextBlock x:Name="RecordWord" FontWeight="SemiBold" FontSize="17"/>
+                                <ContentControl x:Name="RecordKeys" Margin="0,4,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>

@@ -17,7 +17,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="docs/media/record-en-light.gif">
-    <img alt="The SweaxIris studio window: the iris opens, counts down 3-2-1, records, pauses, resumes and saves a take" src="docs/media/record-en-dark.gif" width="88%">
+    <img alt="The SweaxIris studio: live pictures of every window and monitor, one is chosen, the iris counts down, the picker gives way to the program picture, pause, resume, and the take lands in Takes" src="docs/media/record-en-dark.gif" width="88%">
   </picture>
 </p>
 
@@ -33,11 +33,16 @@ programmed to send `Pause`, `Scroll Lock` or `F13`–`F24` works on its own, no 
 The name is the idea: the record button is a camera iris. It opens when you record, stops down with each second
 of the countdown, half closes when you pause and shuts when the take is saved.
 
+> **New in 1.1 — the studio, rebuilt.** Everything you can record is on screen as a live picture: click a
+> monitor, a window or a region and that is what records. Faders that are also level meters, a record strip that
+> always says exactly what will happen, a large program picture while recording, Takes and Settings as pages of
+> their own, and a region picker with frame shapes, exact sizes, snapping and a pixel loupe.
+
 ---
 
 ## Contents
 
-- [See it](#see-it) · [Features](#features) · [The studio](#the-studio) · [Settings](#settings) · [Colours](#colours)
+- [See it](#see-it) · [The studio](#the-studio) · [The region picker](#the-region-picker) · [Features](#features) · [Settings](#settings) · [Colours](#colours)
 - [Shortcuts](#shortcuts) · [Recording options](#recording-options) · [Sound](#sound)
 - [Measured](#measured) · [How it works](#how-it-works) · [Install](#install) · [Command line](#command-line)
 - [Where things are](#where-things-are) · [Privacy](#privacy) · [FAQ](#faq) · [Build from source](#build-from-source) · [License](#license)
@@ -46,17 +51,20 @@ of the countdown, half closes when you pause and shuts when the take is saved.
 
 ## See it
 
-### Record a region
+Three steps, in the order the window asks them: **what** to record, **with which sound**, then the iris.
 
-Press <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>A</kbd>. The screen dims and a crosshair follows the mouse. Drag a rectangle (hold
-<kbd>Shift</kbd> for 16:9), or click a window to take its frame. Pull the edges, nudge it with the arrow keys, press
-<kbd>Enter</kbd>. After the countdown only that rectangle is recorded; a thin frame marks it and the recording bar
-sits just underneath. Neither appears in the video.
+<table>
+<tr>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-en-light.png"><img src="docs/media/main-en-dark.png" alt="Screen: a live picture of every monitor, the monitor under the mouse, and a to-scale map of the arrangement"></picture><br><sub><b>Screen</b> — every monitor live, or the one under the mouse; a map shows how they sit.</sub></td>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-window-en-light.png"><img src="docs/media/main-window-en-dark.png" alt="Window: a live picture of every open window, with search"></picture><br><sub><b>Window</b> — every open window live, even ones behind others; search by title or app.</sub></td>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-region-en-light.png"><img src="docs/media/main-region-en-dark.png" alt="Region: draw a new region or use the last one"></picture><br><sub><b>Region</b> — draw a new one, or keep recording the last one.</sub></td>
+</tr>
+</table>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="docs/media/region-en-light.gif">
-    <img alt="Drawing a region over a dashboard window, then the countdown, the frame and the recording bar" src="docs/media/region-en-dark.gif" width="88%">
+    <img alt="The region picker: the frame glides onto a window, a region is drawn and adjusted, then the countdown, the frame and the recording bar" src="docs/media/region-en-dark.gif" width="88%">
   </picture>
 </p>
 
@@ -69,6 +77,86 @@ The same films as video: [studio, dark](docs/media/record-en-dark.mp4) ·
 
 ---
 
+## The studio
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-en-light.png">
+    <img alt="The studio: Screen, Window and Region; live pictures of the monitors; the sound and picture deck; the record strip with the iris" src="docs/media/main-en-dark.png" width="88%">
+  </picture>
+</p>
+
+- **What.** Screen, Window or Region, then a live picture of everything that fits. Pictures refresh a few times a
+  second, the chosen one faster; hover lifts a tile and brings in viewfinder corners, choosing one pulls focus.
+  With more than one monitor a to-scale map below shows how Windows arranges them, portrait screens included.
+- **Sound.** One fader each for system sound and microphone. The fader *is* the meter: the bar shows how loud the
+  source is after the volume, the knob sets the volume (0–200 %, a soft click at 100 %; the mouse wheel works too).
+  The device is one click away under the name; the big button switches the source on or off.
+- **Picture.** Resolution, frame rate and quality at hand, the encoder in use underneath, everything else one click
+  away in Settings.
+- **The record strip.** Always says what will happen: the chosen picture, its size after scaling, frame rate,
+  quality, encoder and sound — and the iris with its shortcut.
+
+While recording, the picker gives way to the **program picture**: what is being recorded, large, with `REC` and
+the time. Timecode, pause and mic spring out on the strip; the iris opens wide in tally red.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-recording-en-light.png">
+    <img alt="Recording: the program picture with REC and the time, the running timecode, pause, mic and stop" src="docs/media/main-recording-en-dark.png" width="88%">
+  </picture>
+</p>
+
+**Takes** is a page of its own: every recording as a card with its picture, length, size and frame rate. Click to
+play; hover for *show in folder* and *move to the Recycle Bin*; right-click to copy the file.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/library-en-light.png">
+    <img alt="Takes: recordings as cards with thumbnails, length, size and frame rate" src="docs/media/library-en-dark.png" width="88%">
+  </picture>
+</p>
+
+**The recording bar** sits beside what you record: a breathing tally light, the time, the two sound levels, and
+pause, mic and stop. Drag it anywhere.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/bar-en-light.png">
+    <img alt="The recording bar: tally light, timecode, meters, pause, mic and stop" src="docs/media/bar-en-dark.png" width="520">
+  </picture>
+</p>
+
+---
+
+## The region picker
+
+Press <kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>A</kbd> (or choose **Region → Draw a new region**). Every monitor dims and a
+dock drops in at the top.
+
+<table>
+<tr>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/select-hover-en-light.png"><img src="docs/media/select-hover-en-dark.png" alt="Choosing: the frame on a window, with its name and size, and the pixel loupe at the pointer"></picture><br><sub><b>Choosing</b> — the frame glides onto the window under the pointer; the loupe shows the exact pixel.</sub></td>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/select-en-light.png"><img src="docs/media/select-en-dark.png" alt="Adjusting: the region with viewfinder corners, edge grips and the dock with shape, size and Record"></picture><br><sub><b>Adjusting</b> — pull the edges or type the size; <kbd>Enter</kbd> records.</sub></td>
+</tr>
+</table>
+
+- **Click a window** to take its frame, or **drag** anywhere to draw.
+- **Snapping.** Edges snap to window and screen edges, with a guide line; hold <kbd>Alt</kbd> to draw freely.
+- **Frame shapes.** Free, 16:9, 9:16 (for Shorts, Reels and TikTok), 1:1 and 4:3. Drawing and resizing keep the
+  shape; <kbd>Shift</kbd> keeps 16:9 when the shape is free.
+- **Exact size.** Type the width and height in pixels, or pick 4K, 1440p, 1080p, 720p, 1080 × 1920, 1080 × 1350 or
+  1080 × 1080 from **Sizes**. **Full screen** (or <kbd>F</kbd>) takes the whole monitor.
+- **Loupe.** While choosing and resizing, the pixels under the pointer are shown eight times larger with their
+  position and colour, so an edge lands exactly where you want it.
+- **Keys.** Arrows nudge (with <kbd>Shift</kbd> ten pixels), <kbd>Ctrl</kbd> + arrows resize, <kbd>Enter</kbd> or a
+  double-click records, <kbd>Esc</kbd> or a right-click cancels.
+
+After the countdown only that rectangle is recorded; a thin frame marks it and the recording bar sits just
+underneath. Neither appears in the video. SweaxIris remembers the region, so the next time it is one click.
+
+---
+
 ## Features
 
 <table>
@@ -76,9 +164,9 @@ The same films as video: [studio, dark](docs/media/record-en-dark.mp4) ·
 <td width="50%" valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-region-light.svg"><img src="docs/art/feature-region-dark.svg" width="100%" alt=""></picture>
 
-**A region in two keys.** A screenshot-style picker on every monitor, exact to the pixel on mixed-DPI setups.
-Click a window to take its frame; drag for anything else. SweaxIris remembers the last region, so the next time
-<kbd>Enter</kbd> is all it takes.
+**A region in two keys.** A picker on every monitor, exact to the pixel on mixed-DPI setups, with frame shapes,
+exact sizes, snapping and a loupe. SweaxIris remembers the last region, so the next time <kbd>Enter</kbd> is all
+it takes.
 </td>
 <td width="50%" valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-pause-light.svg"><img src="docs/art/feature-pause-dark.svg" width="100%" alt=""></picture>
@@ -98,9 +186,9 @@ Automatic picks the engine of the card that drives the monitor.
 <td valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-audio-light.svg"><img src="docs/art/feature-audio-dark.svg" width="100%" alt=""></picture>
 
-**Sound you control.** System sound and microphone, each with on/off, volume, device and live meter. Mute the mic
-with a key while recording, keep each source on its own track for editing, or record just one app's sound when
-recording its window.
+**Sound you control.** System sound and microphone, each with on/off, a fader that is also its meter, and a
+device. Mute the mic with a key while recording, keep each source on its own track for editing, or record just
+one app's sound when recording its window.
 </td>
 </tr>
 <tr>
@@ -113,61 +201,23 @@ Teach a G key to press <kbd>Pause</kbd> and it starts and stops recording from i
 <td valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-hidden-light.svg"><img src="docs/art/feature-hidden-dark.svg" width="100%" alt=""></picture>
 
-**Never in its own video.** The studio window, the recording bar, the region frame and the countdown are kept out
-of every capture by Windows itself, so you can leave them on screen while you record.
+**Never in its own video.** The studio window, the recording bar, the region picker, its frame and the countdown
+are kept out of every capture by Windows itself, so you can leave them on screen while you record.
 </td>
 </tr>
 </table>
 
 ---
 
-## The studio
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-en-light.png">
-    <img alt="The studio window: live viewfinder, iris record button, source, sound and video" src="docs/media/main-en-dark.png" width="88%">
-  </picture>
-</p>
-
-- **Viewfinder.** A live picture of exactly what will be recorded, with viewfinder corners around it.
-- **Source.** Screen (a map of your monitors to scale; click one, or let SweaxIris use the monitor under the mouse),
-  Window (a list of open windows with their icons) or Region.
-- **Sound.** System sound and microphone, with their devices, meters and volume.
-- **Video.** Resolution, frame rate and quality at hand; everything else is in Settings.
-- **Takes.** Every recording with a thumbnail, its length and size. Click to play, right-click to show it in its
-  folder, copy it or move it to the Recycle Bin.
-
-While recording, the iris opens wide in tally red, the timecode runs, the pause and mic buttons spring out beside
-it and the viewfinder shows `REC` with the size of the file so far.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-recording-en-light.png">
-    <img alt="Recording: the iris is open in red, pause and microphone buttons, the running timecode" src="docs/media/main-recording-en-dark.png" width="88%">
-  </picture>
-</p>
-
-**The recording bar** sits beside what you record: a breathing tally light, the time, the two sound levels, and
-pause, mic and stop. Drag it anywhere.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/bar-en-light.png">
-    <img alt="The recording bar: tally light, timecode, meters, pause, mic and stop" src="docs/media/bar-en-dark.png" width="520">
-  </picture>
-</p>
-
----
-
 ## Settings
 
-Everything is adjustable, every shortcut included. Settings slide in over the studio; <kbd>Esc</kbd> slides them away.
+Everything is adjustable, every shortcut included. Settings is a page of the studio; <kbd>Esc</kbd> goes back to
+Record, and **All video settings** under the picture controls opens the Video page directly.
 
 <table>
 <tr>
 <td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-keys-en-light.png"><img src="docs/media/settings-keys-en-dark.png" alt="Shortcuts page with the macro key note"></picture><br><sub><b>Shortcuts</b> — click one and press the keys.</sub></td>
-<td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-video-en-light.png"><img src="docs/media/settings-video-en-dark.png" alt="Video page"></picture><br><sub><b>Video</b> — resolution, frame rate, encoder, quality or bitrate, effort, keyframes, MP4 or MKV.</sub></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-video-en-light.png"><img src="docs/media/settings-video-en-dark.png" alt="Video page"></picture><br><sub><b>Video</b> — resolution, frame rate, encoder, quality mode and level or bitrate, effort, keyframes, MP4 or MKV.</sub></td>
 </tr>
 <tr>
 <td><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-sound-en-light.png"><img src="docs/media/settings-sound-en-dark.png" alt="Sound page"></picture><br><sub><b>Sound</b> — devices, app-only sound, sync offsets, separate tracks, AAC quality.</sub></td>
@@ -301,7 +351,7 @@ Run it yourself: `SweaxIris.exe --selftest <folder>` then `python tools/analyze.
   sample goes. That is why pausing needs no second file.
 - **File.** FFmpeg 7.1 writes MP4 (with `hvc1` tags for Apple players) or MKV.
 
-Code map: `Capture/` (WGC, GPU, conversion, preview), `Encode/` (FFmpeg encoders and muxer), `Audio/` (WASAPI,
+Code map: `Capture/` (WGC, GPU, conversion, preview, live tile pictures), `Encode/` (FFmpeg encoders and muxer), `Audio/` (WASAPI,
 mixer), `Recording/` (timeline, recorder, studio), `UI/` (windows, iris, controls, springs), `Dev/` (self-test,
 pictures).
 
@@ -309,7 +359,7 @@ pictures).
 
 ## Install
 
-1. Download **SweaxIris-1.0.0-Setup.exe** from [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest).
+1. Download **SweaxIris-1.1.0-Setup.exe** from [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest).
 2. Run it. It installs for your user only (no administrator), into `%LOCALAPPDATA%\Programs\SweaxIris`, and can
    start with Windows so the shortcuts always work.
 
@@ -351,7 +401,8 @@ Videos\SweaxIris\    recordings (change it in Settings → Files)
 
 SweaxIris works offline. It sends nothing anywhere, has no account and no telemetry. It records only when you
 start it, and only what you chose. Microphone and system sound are opened for the meters only while the studio
-window is open, and for the recording.
+window is open, and for the recording. The live pictures of your monitors and windows run only while the Record
+page is on screen, stay inside the app, and stop while recording.
 
 ## FAQ
 

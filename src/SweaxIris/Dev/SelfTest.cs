@@ -45,6 +45,7 @@ public static class SelfTest
                 }
                 if (Want("window")) app.Dispatcher.Invoke(() => { }); // make sure the dispatcher is alive
                 if (Want("window")) WindowTest(app, dir, best);
+                if (Want("thumbs")) ThumbsTest(app, dir);
             }
             catch (Exception ex)
             {
@@ -210,6 +211,35 @@ public static class SelfTest
         var r = rec.Stop();
         Log($"   {r.Width}x{r.Height} {r.Frames} frames, dropped {r.Dropped}, late {r.Late}, {r.Bytes / 1024} KB, {r.Duration.TotalSeconds:0.000}s {r.Error} tone={tone.Error}");
         Report.Add(new { test = "window", path, encoder = enc.Key, w = r.Width, h = r.Height, fps = 60, frames = r.Frames, dropped = r.Dropped, late = r.Late, bytes = r.Bytes, duration = r.Duration.TotalSeconds, error = r.Error, pauses = new[] { new[] { 3.4, 4.6 } }, stopAt = 8.3, real = false, quiet = true, presents = card.Presents });
+    }
+
+    /// <summary>
+    /// The source picker's live pictures, on this process's own topmost test card only: a window tile of the card
+    /// and a region tile cropped strictly inside it. Saves the last picture of each and counts the refreshes.
+    /// </summary>
+    static void ThumbsTest(App app, string dir)
+    {
+        long epoch = Clock.Now;
+        using var card = new TestCardWindow(epoch, 60, 60, 960, 540, topmost: true);
+        Thread.Sleep(800);
+        var frames = new Dictionary<string, int> { ["window"] = 0, ["region"] = 0 };
+        var last = new Dictionary<string, System.Windows.Media.Imaging.BitmapSource>();
+        Thumbnails? thumbs = null;
+        app.Dispatcher.Invoke(() =>
+        {
+            thumbs = new Thumbnails(app.Dispatcher);
+            thumbs.Watch("window", Thumbnails.Window(card.Handle, 6), 6, 480, b => { frames["window"]++; last["window"] = b; });
+            var r = new Native.Win32.RECT { Left = 160, Top = 140, Right = 160 + 640, Bottom = 140 + 360 };
+            thumbs.Watch("region", Thumbnails.Region(r, 6), 6, 480, b => { frames["region"]++; last["region"] = b; });
+        });
+        Thread.Sleep(3000);
+        app.Dispatcher.Invoke(() =>
+        {
+            foreach (var (k, b) in last) Snap.Save(b, Path.Combine(dir, $"thumb-{k}.png"));
+            thumbs!.Dispose();
+        });
+        Log($"── thumbs: window {frames["window"]} pictures {(last.TryGetValue("window", out var w) ? $"{w.PixelWidth}x{w.PixelHeight}" : "none")}, region {frames["region"]} pictures {(last.TryGetValue("region", out var g) ? $"{g.PixelWidth}x{g.PixelHeight}" : "none")}");
+        Report.Add(new { test = "thumbs", window = frames["window"], region = frames["region"] });
     }
 
     /// <summary>The window the real-capture test records: same stamp, flash and bars as the GPU pattern.</summary>

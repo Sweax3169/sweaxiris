@@ -17,7 +17,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="docs/media/record-tr-light.gif">
-    <img alt="SweaxIris stüdyo penceresi: diyafram açılır, 3-2-1 sayar, kaydeder, duraklar, devam eder ve çekimi saklar" src="docs/media/record-tr-dark.gif" width="88%">
+    <img alt="SweaxIris stüdyosu: her pencerenin ve monitörün canlı görüntüsü, biri seçilir, diyafram geri sayar, seçici yerini kaydedilen görüntüye bırakır, duraklat, devam, çekim Çekimler'e düşer" src="docs/media/record-tr-dark.gif" width="88%">
   </picture>
 </p>
 
@@ -33,11 +33,16 @@ Her işin, senin seçtiğin bir kısayolu var ve kısayollar oyuncu klavyelerini
 İsim fikrin kendisi: kayıt düğmesi bir kamera diyaframı. Kayıtta açılır, geri sayımın her saniyesinde kısılır,
 duraklatınca yarıya kapanır, çekim kaydedilince kapanır.
 
+> **1.1'de yeni — stüdyo baştan yapıldı.** Kaydedebileceğin her şey ekranda canlı bir görüntü olarak durur:
+> monitöre, pencereye ya da bölgeye tıkla, kaydedilecek olan odur. Aynı zamanda ses ölçeri olan sürgüler, ne
+> olacağını her an söyleyen bir kayıt şeridi, kayıtta büyük bir yayın görüntüsü, kendi sayfaları olan Çekimler ve
+> Ayarlar; çerçeve oranları, piksel olarak boyut, kenara yapışma ve büyüteçli bir bölge seçici.
+
 ---
 
 ## İçindekiler
 
-- [İzle](#izle) · [Özellikler](#özellikler) · [Stüdyo](#stüdyo) · [Ayarlar](#ayarlar) · [Renkler](#renkler)
+- [İzle](#izle) · [Stüdyo](#stüdyo) · [Bölge seçici](#bölge-seçici) · [Özellikler](#özellikler) · [Ayarlar](#ayarlar) · [Renkler](#renkler)
 - [Kısayollar](#kısayollar) · [Kayıt seçenekleri](#kayıt-seçenekleri) · [Ses](#ses)
 - [Ölçümler](#ölçümler) · [Nasıl çalışır](#nasıl-çalışır) · [Kurulum](#kurulum) · [Komut satırı](#komut-satırı)
 - [Dosyalar nerede](#dosyalar-nerede) · [Gizlilik](#gizlilik) · [SSS](#sss) · [Kaynaktan derleme](#kaynaktan-derleme) · [Lisans](#lisans)
@@ -46,17 +51,20 @@ duraklatınca yarıya kapanır, çekim kaydedilince kapanır.
 
 ## İzle
 
-### Bir bölgeyi kaydet
+Pencerenin sorduğu sırayla üç adım: **ne** kaydedilecek, **hangi sesle**, sonra diyafram.
 
-<kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>A</kbd>'ya bas. Ekran kararır, fareyi bir artı işareti izler. Bir dikdörtgen
-sürükle (16:9 için <kbd>Shift</kbd>'e basılı tut) ya da çerçevesini almak için bir pencereye tıkla. Kenarlarını
-çek, ok tuşlarıyla kaydır, <kbd>Enter</kbd>'a bas. Geri sayımdan sonra yalnız o dikdörtgen kaydedilir; ince bir
-çerçeve onu işaretler, kayıt çubuğu hemen altında durur. İkisi de videoya girmez.
+<table>
+<tr>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-tr-light.png"><img src="docs/media/main-tr-dark.png" alt="Ekran: her monitörün canlı görüntüsü, farenin olduğu ekran ve yerleşimin ölçekli haritası"></picture><br><sub><b>Ekran</b> — her monitör canlı, ya da farenin olduğu; harita nasıl dizildiklerini gösterir.</sub></td>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-window-tr-light.png"><img src="docs/media/main-window-tr-dark.png" alt="Pencere: açık her pencerenin canlı görüntüsü, aramayla"></picture><br><sub><b>Pencere</b> — açık her pencere canlı, arkada kalanlar bile; başlığa ya da uygulamaya göre ara.</sub></td>
+<td width="33%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/main-region-tr-light.png"><img src="docs/media/main-region-tr-dark.png" alt="Bölge: yeni bir bölge çiz ya da sonuncuyu kullan"></picture><br><sub><b>Bölge</b> — yenisini çiz ya da son bölgeyi kaydetmeyi sürdür.</sub></td>
+</tr>
+</table>
 
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="docs/media/region-tr-light.gif">
-    <img alt="Bir pano penceresinin üstünde bölge çizmek, sonra geri sayım, çerçeve ve kayıt çubuğu" src="docs/media/region-tr-dark.gif" width="88%">
+    <img alt="Bölge seçici: çerçeve bir pencerenin üstüne kayar, bölge çizilip ayarlanır, sonra geri sayım, çerçeve ve kayıt çubuğu" src="docs/media/region-tr-dark.gif" width="88%">
   </picture>
 </p>
 
@@ -69,6 +77,87 @@ Aynı filmler video olarak: [stüdyo, koyu](docs/media/record-tr-dark.mp4) ·
 
 ---
 
+## Stüdyo
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-tr-light.png">
+    <img alt="Stüdyo: Ekran, Pencere ve Bölge; monitörlerin canlı görüntüleri; ses ve görüntü paneli; diyaframlı kayıt şeridi" src="docs/media/main-tr-dark.png" width="88%">
+  </picture>
+</p>
+
+- **Ne.** Ekran, Pencere ya da Bölge; ardından uyan her şeyin canlı görüntüsü. Görüntüler saniyede birkaç kez,
+  seçili olan daha sık tazelenir; üstüne gelince kart kalkar ve vizör köşeleri belirir, seçince netlik oturur.
+  Birden çok monitörde altta ölçekli bir harita, dikey ekranlar dahil Windows'un onları nasıl dizdiğini gösterir.
+- **Ses.** Sistem sesi ve mikrofon için birer sürgü. Sürgü aynı zamanda ölçerdir: çubuk kaynağın ses düzeyinden
+  sonraki gürlüğünü gösterir, topuz ses düzeyini ayarlar (%0–200, %100'de yumuşak bir tık; fare tekerleği de
+  çalışır). Aygıt adın altında bir tık uzakta; büyük düğme kaynağı açar ya da kapatır.
+- **Görüntü.** Çözünürlük, kare hızı ve kalite elinin altında, kullanılan kodlayıcı hemen altında, gerisi Ayarlar'da
+  bir tık ötede.
+- **Kayıt şeridi.** Ne olacağını hep söyler: seçilen görüntü, ölçeklenmiş boyutu, kare hızı, kalite, kodlayıcı ve
+  ses — ve kısayoluyla diyafram.
+
+Kayıtta seçici yerini **yayın görüntüsüne** bırakır: kaydedilen şey, büyük, `REC` ve süreyle. Şeritte zaman kodu,
+duraklat ve mikrofon yaylanarak çıkar; diyafram kırmızıya geniş açılır.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-recording-tr-light.png">
+    <img alt="Kayıt: REC ve süreyle yayın görüntüsü, akan zaman kodu, duraklat, mikrofon ve durdur" src="docs/media/main-recording-tr-dark.png" width="88%">
+  </picture>
+</p>
+
+**Çekimler** kendi sayfası: her kayıt; görüntüsü, süresi, boyutu ve kare hızıyla bir kart. Tıkla oynat; üstüne gel,
+*klasörde göster* ve *Geri Dönüşüm Kutusu'na taşı*; sağ tıkla dosyayı kopyala.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/library-tr-light.png">
+    <img alt="Çekimler: küçük resim, süre, boyut ve kare hızıyla kartlar" src="docs/media/library-tr-dark.png" width="88%">
+  </picture>
+</p>
+
+**Kayıt çubuğu** kaydettiğin yerin yanında durur: nefes alan kayıt ışığı, süre, iki ses düzeyi; duraklat,
+mikrofon ve durdur. İstediğin yere sürükle.
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/bar-tr-light.png">
+    <img alt="Kayıt çubuğu: kayıt ışığı, zaman kodu, ölçerler, duraklat, mikrofon ve durdur" src="docs/media/bar-tr-dark.png" width="520">
+  </picture>
+</p>
+
+---
+
+## Bölge seçici
+
+<kbd>Ctrl</kbd> <kbd>Alt</kbd> <kbd>A</kbd>'ya bas (ya da **Bölge → Yeni bölge çiz**). Her monitör kararır, üstte bir
+panel iner.
+
+<table>
+<tr>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/select-hover-tr-light.png"><img src="docs/media/select-hover-tr-dark.png" alt="Seçerken: çerçeve adı ve boyutuyla bir pencerenin üstünde, imleçte piksel büyüteci"></picture><br><sub><b>Seçerken</b> — çerçeve imlecin altındaki pencerenin üstüne kayar; büyüteç tam pikseli gösterir.</sub></td>
+<td width="50%" valign="top"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/select-tr-light.png"><img src="docs/media/select-tr-dark.png" alt="Ayarlarken: vizör köşeli bölge, kenar tutamakları ve oran, boyut, Kaydet panelli üst şerit"></picture><br><sub><b>Ayarlarken</b> — kenarları çek ya da boyutu yaz; <kbd>Enter</kbd> kaydeder.</sub></td>
+</tr>
+</table>
+
+- Çerçevesini almak için **pencereye tıkla** ya da herhangi bir yerde **sürükleyerek çiz**.
+- **Yapışma.** Kenarlar pencere ve ekran kenarlarına, bir kılavuz çizgiyle yapışır; serbest çizmek için
+  <kbd>Alt</kbd>'a basılı tut.
+- **Çerçeve oranı.** Serbest, 16:9, 9:16 (Shorts, Reels ve TikTok için), 1:1 ve 4:3. Çizerken de boyutlarken de
+  oran korunur; oran serbestken <kbd>Shift</kbd> 16:9 tutar.
+- **Tam boyut.** Genişliği ve yüksekliği piksel olarak yaz ya da **Boyutlar**'dan 4K, 1440p, 1080p, 720p,
+  1080 × 1920, 1080 × 1350 veya 1080 × 1080 seç. **Tam ekran** (ya da <kbd>F</kbd>) bütün monitörü alır.
+- **Büyüteç.** Seçerken ve boyutlarken imlecin altındaki pikseller sekiz kat büyük, konumu ve rengiyle görünür;
+  kenar tam istediğin yere oturur.
+- **Tuşlar.** Oklar kaydırır (<kbd>Shift</kbd> ile on piksel), <kbd>Ctrl</kbd> + oklar boyutlar, <kbd>Enter</kbd> ya da
+  çift tık kaydeder, <kbd>Esc</kbd> ya da sağ tık vazgeçer.
+
+Geri sayımdan sonra yalnız o dikdörtgen kaydedilir; ince bir çerçeve onu işaretler, kayıt çubuğu hemen altında
+durur. İkisi de videoya girmez. Bölge hatırlanır; sonraki sefer tek tık.
+
+---
+
 ## Özellikler
 
 <table>
@@ -76,9 +165,8 @@ Aynı filmler video olarak: [stüdyo, koyu](docs/media/record-tr-dark.mp4) ·
 <td width="50%" valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-region-light.svg"><img src="docs/art/feature-region-dark.svg" width="100%" alt=""></picture>
 
-**İki tuşla bölge.** Ekran görüntüsü alır gibi bir seçici, her monitörde; farklı ölçekli ekranlarda bile pikseli
-pikseline. Çerçevesini almak için pencereye tıkla, gerisi için sürükle. Son bölge hatırlanır; sonraki sefer
-<kbd>Enter</kbd> yeter.
+**İki tuşla bölge.** Her monitörde bir seçici; farklı ölçekli ekranlarda bile pikseli pikseline, çerçeve oranları,
+tam boyutlar, yapışma ve büyüteçle. Son bölge hatırlanır; sonraki sefer <kbd>Enter</kbd> yeter.
 </td>
 <td width="50%" valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-pause-light.svg"><img src="docs/art/feature-pause-dark.svg" width="100%" alt=""></picture>
@@ -97,9 +185,9 @@ Kart destekliyorsa H.264, HEVC ve AV1; donanım kodlayıcı yoksa x264. Otomatik
 <td valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-audio-light.svg"><img src="docs/art/feature-audio-dark.svg" width="100%" alt=""></picture>
 
-**Sesi sen yönet.** Sistem sesi ve mikrofon; her birinde aç/kapa, ses düzeyi, aygıt ve canlı ölçer. Kayıtta
-mikrofonu bir tuşla sustur, kurgu için kaynakları ayrı kanallarda tut ya da bir pencereyi kaydederken yalnız o
-uygulamanın sesini al.
+**Sesi sen yönet.** Sistem sesi ve mikrofon; her birinde aç/kapa, aynı zamanda ölçer olan bir sürgü ve aygıt
+seçimi. Kayıtta mikrofonu bir tuşla sustur, kurgu için kaynakları ayrı kanallarda tut ya da bir pencereyi
+kaydederken yalnız o uygulamanın sesini al.
 </td>
 </tr>
 <tr>
@@ -112,61 +200,23 @@ sayılır. Bir G tuşuna <kbd>Pause</kbd> öğret; oyunun içinden kaydı başla
 <td valign="top">
 <picture><source media="(prefers-color-scheme: light)" srcset="docs/art/feature-hidden-light.svg"><img src="docs/art/feature-hidden-dark.svg" width="100%" alt=""></picture>
 
-**Kendi videosuna girmez.** Stüdyo penceresi, kayıt çubuğu, bölge çerçevesi ve geri sayım, Windows'un kendisi
-tarafından her yakalamanın dışında tutulur; kayıt sırasında ekranda kalabilirler.
+**Kendi videosuna girmez.** Stüdyo penceresi, kayıt çubuğu, bölge seçici, çerçevesi ve geri sayım, Windows'un
+kendisi tarafından her yakalamanın dışında tutulur; kayıt sırasında ekranda kalabilirler.
 </td>
 </tr>
 </table>
 
 ---
 
-## Stüdyo
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-tr-light.png">
-    <img alt="Stüdyo penceresi: canlı vizör, diyafram kayıt düğmesi, kaynak, ses ve görüntü" src="docs/media/main-tr-dark.png" width="88%">
-  </picture>
-</p>
-
-- **Vizör.** Tam olarak kaydedilecek şeyin canlı görüntüsü, çevresinde vizör köşeleri.
-- **Kaynak.** Ekran (monitörlerinin ölçekli haritası: birine tıkla ya da farenin olduğu monitörü kullansın),
-  Pencere (açık pencerelerin simgeleriyle listesi) ya da Bölge.
-- **Ses.** Sistem sesi ve mikrofon; aygıtları, ölçerleri, ses düzeyleri.
-- **Görüntü.** Çözünürlük, kare hızı ve kalite elinin altında; gerisi Ayarlar'da.
-- **Çekimler.** Her kayıt küçük resmi, süresi ve boyutuyla. Tıkla oynat; sağ tıkla klasörde göster, kopyala ya da
-  Geri Dönüşüm Kutusu'na taşı.
-
-Kayıtta diyafram kırmızıya açılır, zaman kodu akar, duraklat ve mikrofon düğmeleri yanına yaylanarak çıkar,
-vizörde `KAYIT` ve dosyanın o anki boyutu görünür.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/main-recording-tr-light.png">
-    <img alt="Kayıt: diyafram kırmızı açık, duraklat ve mikrofon düğmeleri, akan zaman kodu" src="docs/media/main-recording-tr-dark.png" width="88%">
-  </picture>
-</p>
-
-**Kayıt çubuğu** kaydettiğin yerin yanında durur: nefes alan kayıt ışığı, süre, iki ses düzeyi; duraklat,
-mikrofon ve durdur. İstediğin yere sürükle.
-
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: light)" srcset="docs/media/bar-tr-light.png">
-    <img alt="Kayıt çubuğu: kayıt ışığı, zaman kodu, ölçerler, duraklat, mikrofon ve durdur" src="docs/media/bar-tr-dark.png" width="520">
-  </picture>
-</p>
-
----
-
 ## Ayarlar
 
-Her şey ayarlanabilir, her kısayol dahil. Ayarlar stüdyonun üstüne kayar; <kbd>Esc</kbd> geri kaydırır.
+Her şey ayarlanabilir, her kısayol dahil. Ayarlar stüdyonun bir sayfası; <kbd>Esc</kbd> Kayıt'a döner, görüntü
+seçeneklerinin altındaki **Tüm görüntü ayarları** doğrudan Görüntü sayfasını açar.
 
 <table>
 <tr>
 <td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-keys-tr-light.png"><img src="docs/media/settings-keys-tr-dark.png" alt="Kısayollar sayfası ve makro tuşu notu"></picture><br><sub><b>Kısayollar</b> — birine tıkla, tuşlara bas.</sub></td>
-<td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-video-tr-light.png"><img src="docs/media/settings-video-tr-dark.png" alt="Görüntü sayfası"></picture><br><sub><b>Görüntü</b> — çözünürlük, kare hızı, kodlayıcı, kalite ya da bit hızı, çaba, anahtar kare, MP4 ya da MKV.</sub></td>
+<td width="50%"><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-video-tr-light.png"><img src="docs/media/settings-video-tr-dark.png" alt="Görüntü sayfası"></picture><br><sub><b>Görüntü</b> — çözünürlük, kare hızı, kodlayıcı, kalite modu ve düzeyi ya da bit hızı, çaba, anahtar kare, MP4 ya da MKV.</sub></td>
 </tr>
 <tr>
 <td><picture><source media="(prefers-color-scheme: light)" srcset="docs/media/settings-sound-tr-light.png"><img src="docs/media/settings-sound-tr-dark.png" alt="Ses sayfası"></picture><br><sub><b>Ses</b> — aygıtlar, yalnız uygulama sesi, senkron kaydırma, ayrı kanallar, AAC kalitesi.</sub></td>
@@ -300,7 +350,7 @@ Kendin dene: `SweaxIris.exe --selftest <klasör>`, sonra `python tools/analyze.p
   o karar verir. Duraklatmanın ikinci bir dosya gerektirmemesinin sebebi bu.
 - **Dosya.** FFmpeg 7.1, MP4 (Apple oynatıcıları için `hvc1` etiketiyle) ya da MKV yazar.
 
-Kod haritası: `Capture/` (WGC, GPU, dönüşüm, önizleme), `Encode/` (FFmpeg kodlayıcılar ve yazıcı), `Audio/`
+Kod haritası: `Capture/` (WGC, GPU, dönüşüm, önizleme, canlı kart görüntüleri), `Encode/` (FFmpeg kodlayıcılar ve yazıcı), `Audio/`
 (WASAPI, mikser), `Recording/` (zaman çizelgesi, kaydedici, stüdyo), `UI/` (pencereler, diyafram, kontroller,
 yaylar), `Dev/` (öz-test, görseller).
 
@@ -308,7 +358,7 @@ yaylar), `Dev/` (öz-test, görseller).
 
 ## Kurulum
 
-1. [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest) sayfasından **SweaxIris-1.0.0-Setup.exe**'yi indir.
+1. [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest) sayfasından **SweaxIris-1.1.0-Setup.exe**'yi indir.
 2. Çalıştır. Yalnız senin kullanıcın için (yönetici gerekmeden) `%LOCALAPPDATA%\Programs\SweaxIris` klasörüne
    kurulur; kısayollar hep çalışsın diye Windows ile başlayabilir.
 
@@ -350,7 +400,8 @@ Videolar\SweaxIris\  kayıtlar (Ayarlar → Dosyalar'dan değişir)
 
 SweaxIris çevrimdışı çalışır. Hiçbir yere bir şey göndermez; hesap yok, telemetri yok. Yalnız sen başlatınca ve
 yalnız seçtiğin şeyi kaydeder. Mikrofon ve sistem sesi, ölçerler için yalnız stüdyo penceresi açıkken ve kayıt
-için açılır.
+için açılır. Monitörlerinin ve pencerelerinin canlı görüntüleri yalnız Kayıt sayfası ekrandayken çalışır, uygulamanın
+dışına çıkmaz ve kayıt sırasında durur.
 
 ## SSS
 

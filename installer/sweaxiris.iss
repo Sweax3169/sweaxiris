@@ -3,7 +3,7 @@
 ; Installs for the current user only (no admin), into %LOCALAPPDATA%\Programs\SweaxIris.
 
 #ifndef AppVer
-  #define AppVer "1.0.0"
+  #define AppVer "1.1.0"
 #endif
 #ifndef Src
   #define Src "..\out\app"

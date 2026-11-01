@@ -398,4 +398,164 @@
     <Geometry x:Key="IcoFilm">M4,5 H20 V19 H4 Z M8,5 V19 M16,5 V19 M4,9 H8 M4,15 H8 M16,9 H20 M16,15 H20</Geometry>
     <Geometry x:Key="IcoBrush">M14,4 L20,10 L11,19 C9,21 5,21 4,20 C5,19 5,16 7,14 Z</Geometry>
     <Geometry x:Key="IcoCheck">M5,12.5 L10,17.5 L19,7</Geometry>
+
+    <!-- the record page -->
+    <Style x:Key="Deck" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource Surface}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource Line}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="14"/>
+    </Style>
+    <Style x:Key="Panel" TargetType="Border">
+        <Setter Property="Padding" Value="18,14,18,14"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="ModeBtn" TargetType="Button">
+        <Setter Property="Height" Value="74"/>
+        <Setter Property="Foreground" Value="{DynamicResource Text}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ui:Press.Enabled" Value="True"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="b" CornerRadius="14" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="1" Padding="18,0">
+                        <Grid>
+                            <Border x:Name="h" CornerRadius="13" Background="{DynamicResource Hover}" Opacity="0" Margin="-18,0"/>
+                            <ContentPresenter VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="h" Property="Opacity" Value="1"/></Trigger>
+                        <Trigger Property="ui:Mark.On" Value="True">
+                            <Setter TargetName="b" Property="Background" Value="{DynamicResource AccentSoft}"/>
+                            <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                            <Setter TargetName="b" Property="BorderThickness" Value="2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ChannelBtn" TargetType="ToggleButton">
+        <Setter Property="Width" Value="46"/>
+        <Setter Property="Height" Value="46"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextFaint}"/>
+        <Setter Property="ui:Press.Enabled" Value="True"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border x:Name="b" CornerRadius="12" Background="{DynamicResource Sunken}" BorderBrush="{DynamicResource Line}" BorderThickness="1">
+                        <Grid>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Path x:Name="slash" Data="M12,12 L34,34" Stroke="{DynamicResource Tally}" StrokeThickness="2.2" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="b" Property="Background" Value="{DynamicResource Accent}"/>
+                            <Setter TargetName="b" Property="BorderBrush" Value="{DynamicResource Accent}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource AccentText}"/>
+                            <Setter TargetName="slash" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="b" Property="Opacity" Value="0.88"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LinkBtn" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource Accent}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <TextBlock x:Name="t" Text="{TemplateBinding Content}" Background="Transparent"/>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter TargetName="t" Property="TextDecorations" Value="Underline"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LinkCombo" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextDim}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="MaxWidth" Value="230"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <ToggleButton Focusable="False" ClickMode="Press" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ToggleButton.Template>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border Background="Transparent">
+                                        <StackPanel Orientation="Horizontal">
+                                            <ContentPresenter Content="{Binding SelectionBoxItem, RelativeSource={RelativeSource AncestorType=ComboBox}}" TextElement.Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ComboBox}}"/>
+                                            <Path Data="M0,0 L3.5,3.5 L7,0" Stroke="{DynamicResource TextFaint}" StrokeThickness="1.4" Margin="6,1,0,0" VerticalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Border>
+                                </ControlTemplate>
+                            </ToggleButton.Template>
+                        </ToggleButton>
+                        <Popup IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" AllowsTransparency="True" Focusable="False" VerticalOffset="4">
+                            <Border Background="{DynamicResource Raised}" BorderBrush="{DynamicResource Line}" BorderThickness="1" CornerRadius="9" Padding="4" MinWidth="240" MaxHeight="320" Margin="0,0,10,12">
+                                <Border.Effect><DropShadowEffect BlurRadius="18" ShadowDepth="4" Opacity="0.35" Color="{DynamicResource ShadowColor}"/></Border.Effect>
+                                <ScrollViewer><ItemsPresenter/></ScrollViewer>
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{DynamicResource Text}"/></Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="TabBtn" TargetType="Button">
+        <Setter Property="Foreground" Value="{DynamicResource TextDim}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Padding" Value="16,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent" Padding="{TemplateBinding Padding}"><ContentPresenter VerticalAlignment="Center"/></Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True"><Setter Property="Foreground" Value="{DynamicResource Text}"/></Trigger>
+                        <Trigger Property="ui:Mark.On" Value="True"><Setter Property="Foreground" Value="{DynamicResource Text}"/></Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!-- a grid of tiles that fills the page exactly: the bar sits out in the page margin, hover lifts are not clipped -->
+    <Style x:Key="TileScroll" TargetType="ScrollViewer">
+        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ScrollViewer">
+                    <Grid>
+                        <ScrollContentPresenter Margin="-6,0,16,0" CanContentScroll="False"/>
+                        <ScrollBar x:Name="PART_VerticalScrollBar" HorizontalAlignment="Right" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Geometry x:Key="IcoSearch">M10.5,4.5 A6,6 0 1 1 10.5,16.5 A6,6 0 1 1 10.5,4.5 M15,15 L20,20</Geometry>
+    <Geometry x:Key="IcoRefresh">M19,12 A7,7 0 1 1 16.9,7 M17.4,3.4 V7.6 H13.2</Geometry>
+    <Geometry x:Key="IcoMouse">M8,4 H16 V20 H8 Z M12,4 V9 M8,9 H16</Geometry>
 </ResourceDictionary>

@@ -50,9 +50,9 @@ public sealed class WgcSource : IVideoSource
     SizeInt32 _poolSize;
     // the last few frames with the moment Windows composed them, so the recorder can take the one that
     // belongs to each tick instead of whatever arrived last
-    const int Ring = 6;
-    readonly ID3D11Texture2D?[] _ring = new ID3D11Texture2D?[Ring];
-    readonly long[] _times = new long[Ring];
+    readonly int Ring;
+    readonly ID3D11Texture2D?[] _ring;
+    readonly long[] _times;
     int _write, _filled;
     ID3D11Texture2D? _latest;
     long _frames;
@@ -86,14 +86,18 @@ public sealed class WgcSource : IVideoSource
     }
 
     /// <param name="every">Least time between frames (0 = every refresh, for recording).</param>
-    public static WgcSource ForMonitor(Gpu gpu, IntPtr hmon, Win32.RECT? crop, bool cursor, TimeSpan every = default)
-        => new(gpu, WinRtInterop.ForMonitor(hmon), window: false, crop, cursor, every);
+    /// <param name="ring">How many recent frames to keep (the recorder wants a few; a thumbnail needs one).</param>
+    public static WgcSource ForMonitor(Gpu gpu, IntPtr hmon, Win32.RECT? crop, bool cursor, TimeSpan every = default, int ring = 6)
+        => new(gpu, WinRtInterop.ForMonitor(hmon), window: false, crop, cursor, every, ring);
 
-    public static WgcSource ForWindow(Gpu gpu, IntPtr hwnd, bool cursor, TimeSpan every = default)
-        => new(gpu, WinRtInterop.ForWindow(hwnd), window: true, null, cursor, every);
+    public static WgcSource ForWindow(Gpu gpu, IntPtr hwnd, bool cursor, TimeSpan every = default, int ring = 6)
+        => new(gpu, WinRtInterop.ForWindow(hwnd), window: true, null, cursor, every, ring);
 
-    WgcSource(Gpu gpu, GraphicsCaptureItem item, bool window, Win32.RECT? crop, bool cursor, TimeSpan every)
+    WgcSource(Gpu gpu, GraphicsCaptureItem item, bool window, Win32.RECT? crop, bool cursor, TimeSpan every, int ring)
     {
+        Ring = Math.Max(1, ring);
+        _ring = new ID3D11Texture2D?[Ring];
+        _times = new long[Ring];
         _gpu = gpu;
         _item = item;
         _window = window;
