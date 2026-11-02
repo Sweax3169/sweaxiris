@@ -64,14 +64,15 @@ public static class Shots
         Studio.Demo = true;
         Studio.DemoMonitors =
         [
-            new(IntPtr.Zero, @"\\.\DISPLAY2", "Side 27", new Win32.RECT { Left = -2560, Top = 0, Right = 0, Bottom = 1440 }, false, 144, 1),
-            new(IntPtr.Zero, @"\\.\DISPLAY1", "Main 27", new Win32.RECT { Left = 0, Top = 0, Right = 2560, Bottom = 1440 }, true, 240, 2),
+            // numbered like Windows does: by DISPLAYn, so the screen on the left is 2
+            new(IntPtr.Zero, @"\\.\DISPLAY1", "Main 27", new Win32.RECT { Left = 0, Top = 0, Right = 2560, Bottom = 1440 }, true, 240, 1),
+            new(IntPtr.Zero, @"\\.\DISPLAY2", "Side 27", new Win32.RECT { Left = -2560, Top = 0, Right = 0, Bottom = 1440 }, false, 144, 2),
             new(IntPtr.Zero, @"\\.\DISPLAY3", "Portrait 24", new Win32.RECT { Left = 2560, Top = -516, Right = 4000, Bottom = 2044 }, false, 60, 3),
         ];
         Studio.DemoWindows = [("Highway Dusk — racing", "dusk.exe"), ("Atlas — Live dashboard", "atlas.exe"), ("notes.md — Quill", "quill.exe"), ("Voice chat", "voice.exe")];
         MainWindow.DemoSystemDevice = Loc.Turkish ? "Hoparlörler" : "Speakers";
         MainWindow.DemoMicDevice = Loc.Turkish ? "Stüdyo mikrofonu" : "Studio microphone";
-        MainWindow.DemoSource = ("Main 27", 2560, 1440);
+        MainWindow.DemoSource = (Loc.F("mon.title", 1, "Main 27"), 2560, 1440);
         // made-up pictures for every tile of the source picker
         var pics = new Dictionary<string, BitmapSource>();
         MainWindow.DemoPicture = key =>

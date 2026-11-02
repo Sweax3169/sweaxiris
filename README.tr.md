@@ -89,6 +89,8 @@ Aynı filmler video olarak: [stüdyo, koyu](docs/media/record-tr-dark.mp4) ·
 - **Ne.** Ekran, Pencere ya da Bölge; ardından uyan her şeyin canlı görüntüsü. Görüntüler saniyede birkaç kez,
   seçili olan daha sık tazelenir; üstüne gelince kart kalkar ve vizör köşeleri belirir, seçince netlik oturur.
   Birden çok monitörde altta ölçekli bir harita, dikey ekranlar dahil Windows'un onları nasıl dizdiğini gösterir.
+  Monitörler Windows'un Ekran ayarlarındaki numaralarını taşır (*Ekran 1 · LG ULTRAGEAR*); aynı modelden iki ekran
+  kolayca ayırt edilir.
 - **Ses.** Sistem sesi ve mikrofon için birer sürgü. Sürgü aynı zamanda ölçerdir: çubuk kaynağın ses düzeyinden
   sonraki gürlüğünü gösterir, topuz ses düzeyini ayarlar (%0–200, %100'de yumuşak bir tık; fare tekerleği de
   çalışır). Aygıt adın altında bir tık uzakta; büyük düğme kaynağı açar ya da kapatır.
@@ -358,7 +360,7 @@ yaylar), `Dev/` (öz-test, görseller).
 
 ## Kurulum
 
-1. [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest) sayfasından **SweaxIris-1.1.0-Setup.exe**'yi indir.
+1. [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest) sayfasından **SweaxIris-1.1.1-Setup.exe**'yi indir.
 2. Çalıştır. Yalnız senin kullanıcın için (yönetici gerekmeden) `%LOCALAPPDATA%\Programs\SweaxIris` klasörüne
    kurulur; kısayollar hep çalışsın diye Windows ile başlayabilir.
 

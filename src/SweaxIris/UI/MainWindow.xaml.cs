@@ -314,7 +314,7 @@ public partial class MainWindow : Window
                 if (_studio.LastRegion is { } r)
                 {
                     var mon = Studio.Monitors().FirstOrDefault(m => !Studio.Demo && m.Handle == Win32.MonitorFromRect(ref r, Win32.MONITOR_DEFAULTTONEAREST));
-                    var last = new SourceTile(w, Loc.T("tile.last") + $" · {r.Width} × {r.Height}", $"{r.Left}, {r.Top}{(mon != null ? " · " + mon.Name : "")}");
+                    var last = new SourceTile(w, Loc.T("tile.last") + $" · {r.Width} × {r.Height}", $"{r.Left}, {r.Top}{(mon != null ? " · " + mon.Title : "")}");
                     last.Picked += t => Select(t);
                     Add(last, $"reg:{r.Left},{r.Top},{r.Right},{r.Bottom}", Thumbnails.Region(r, 4), true);
                 }
@@ -330,7 +330,7 @@ public partial class MainWindow : Window
                 foreach (var m in mons)
                 {
                     string sub = $"{m.Bounds.Width} × {m.Bounds.Height}{(m.Hz > 0 ? $" · {Math.Round(m.Hz)} Hz" : "")}{(m.Primary ? " · " + Loc.T("tile.primary") : "")}";
-                    var tile = new SourceTile(w, m.Name, sub) { Key = m.Device };
+                    var tile = new SourceTile(w, m.Title, sub) { Key = m.Device };
                     var dev = m.Device;
                     tile.Picked += t => { S.Monitor = dev; S.Save(); Select(t); };
                     Add(tile, "mon:" + m.Device, Thumbnails.Monitor(m.Handle, 1.5), S.Monitor.Equals(m.Device, StringComparison.OrdinalIgnoreCase));
@@ -559,7 +559,7 @@ public partial class MainWindow : Window
         {
             if (t.Kind == SourceKind.Region) { sw = t.Region.Width; sh = t.Region.Height; what = Loc.T("src.region"); }
             else if (t.Kind == SourceKind.Window) { var f = Win32.FrameOf(t.Window); sw = f.Width; sh = f.Height; what = Win32.GetWindowTitle(t.Window); }
-            else if (_studio.ChosenMonitor() is { } m) { sw = m.Bounds.Width; sh = m.Bounds.Height; what = string.IsNullOrEmpty(S.Monitor) ? $"{m.Name} ({Loc.T("tile.mouse").ToLowerInvariant()})" : m.Name; }
+            else if (_studio.ChosenMonitor() is { } m) { sw = m.Bounds.Width; sh = m.Bounds.Height; what = string.IsNullOrEmpty(S.Monitor) ? $"{m.Title} ({Loc.T("tile.mouse").ToLowerInvariant()})" : m.Title; }
         }
         var enc = _studio.PickEncoder(t);
         string encText = _studio.Encoders == null && !Studio.Demo ? Loc.T("set.encoder.checking") : $"{enc} · {S.Container.ToUpperInvariant()}";

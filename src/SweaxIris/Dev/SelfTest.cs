@@ -32,6 +32,7 @@ public static class SelfTest
         {
             try
             {
+                if (Want("monitors")) foreach (var m in Studio.Monitors()) Log($"monitor {m.Number}: {m.Title} {m.Device} at {m.Bounds.Left},{m.Bounds.Top} {m.Bounds.Width}x{m.Bounds.Height}{(m.Primary ? " primary" : "")}");
                 if (Want("encoders")) Encoders();
                 var best = BestEncoder();
                 Log($"best encoder: {best}");

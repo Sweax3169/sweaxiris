@@ -89,6 +89,8 @@ The same films as video: [studio, dark](docs/media/record-en-dark.mp4) ·
 - **What.** Screen, Window or Region, then a live picture of everything that fits. Pictures refresh a few times a
   second, the chosen one faster; hover lifts a tile and brings in viewfinder corners, choosing one pulls focus.
   With more than one monitor a to-scale map below shows how Windows arranges them, portrait screens included.
+  Monitors carry the same numbers as in Windows' Display settings (*Display 1 · LG ULTRAGEAR*), so two screens of
+  the same model are easy to tell apart.
 - **Sound.** One fader each for system sound and microphone. The fader *is* the meter: the bar shows how loud the
   source is after the volume, the knob sets the volume (0–200 %, a soft click at 100 %; the mouse wheel works too).
   The device is one click away under the name; the big button switches the source on or off.
@@ -359,7 +361,7 @@ pictures).
 
 ## Install
 
-1. Download **SweaxIris-1.1.0-Setup.exe** from [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest).
+1. Download **SweaxIris-1.1.1-Setup.exe** from [Releases](https://github.com/Sweax3169/sweaxiris/releases/latest).
 2. Run it. It installs for your user only (no administrator), into `%LOCALAPPDATA%\Programs\SweaxIris`, and can
    start with Windows so the shortcuts always work.
 

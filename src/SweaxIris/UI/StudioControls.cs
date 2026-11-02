@@ -264,7 +264,7 @@ public sealed class MonitorMap : Grid
             {
                 Width = Math.Max(8, m.Bounds.Width * k - 4), Height = Math.Max(8, m.Bounds.Height * k - 4),
                 CornerRadius = new CornerRadius(5), BorderThickness = new Thickness(on ? 2 : 1), Cursor = Cursors.Hand,
-                ToolTip = $"{m.Name} · {m.Bounds.Width} × {m.Bounds.Height}",
+                ToolTip = $"{m.Title} · {m.Bounds.Width} × {m.Bounds.Height}",
             };
             b.SetResourceReference(Border.BackgroundProperty, on ? "AccentSoft" : "Raised");
             b.SetResourceReference(Border.BorderBrushProperty, on ? "Accent" : "Line");

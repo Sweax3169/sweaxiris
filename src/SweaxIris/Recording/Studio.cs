@@ -13,7 +13,12 @@ namespace SweaxIris.Recording;
 public enum StudioState { Idle, Arming, Recording, Paused, Finishing }
 
 /// <summary>A monitor as the UI shows it.</summary>
-public sealed record MonitorItem(IntPtr Handle, string Device, string Name, Win32.RECT Bounds, bool Primary, double Hz, int Number);
+/// <param name="Number">The number Windows gives the display in Settings → Display (1, 2, 3…).</param>
+public sealed record MonitorItem(IntPtr Handle, string Device, string Name, Win32.RECT Bounds, bool Primary, double Hz, int Number)
+{
+    /// <summary>"Display 2 · A27 V2": the number tells apart two monitors of the same model.</summary>
+    public string Title => string.IsNullOrWhiteSpace(Name) ? Loc.F("mon.only", Number) : Loc.F("mon.title", Number, Name);
+}
 
 /// <summary>A finished recording in the Takes shelf.</summary>
 public sealed record Take(string Path, DateTime When, double Seconds, long Bytes, int Width, int Height, int Fps, string Encoder, string? Thumb, long Dropped);
@@ -120,16 +125,23 @@ public sealed class Studio
     {
         if (DemoMonitors != null) return DemoMonitors;
         var names = Win32.MonitorNames();
+        var mons = Win32.MonitorList().Select(m => (m.Handle, m.Bounds, m.Primary, Device: Win32.MonitorDevice(m.Handle))).ToList();
+        // Windows numbers displays by their \\.\DISPLAYn name, not by where they stand: the left one can be 2
+        var order = mons.Select(m => m.Device).OrderBy(DisplayIndex).ThenBy(d => d, StringComparer.OrdinalIgnoreCase).ToList();
         var list = new List<MonitorItem>();
-        int n = 1;
-        foreach (var (h, r, primary) in Win32.MonitorList().OrderBy(m => m.Bounds.Left).ThenBy(m => m.Bounds.Top))
+        foreach (var m in mons)
         {
-            string dev = Win32.MonitorDevice(h);
-            var (name, hz) = names.TryGetValue(dev, out var v) ? v : ("", 0);
-            list.Add(new MonitorItem(h, dev, string.IsNullOrWhiteSpace(name) ? Loc.F("src.monitor", n) : name, r, primary, hz, n));
-            n++;
+            var (name, hz) = names.TryGetValue(m.Device, out var v) ? v : ("", 0);
+            list.Add(new MonitorItem(m.Handle, m.Device, name, m.Bounds, m.Primary, hz, order.IndexOf(m.Device) + 1));
         }
-        return list;
+        return list.OrderBy(m => m.Number).ToList();
+    }
+
+    static int DisplayIndex(string device)
+    {
+        int i = device.Length;
+        while (i > 0 && char.IsDigit(device[i - 1])) i--;
+        return int.TryParse(device[i..], out int n) ? n : int.MaxValue;
     }
 
     public MonitorItem? ChosenMonitor()
